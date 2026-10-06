@@ -1,0 +1,124 @@
+# RenewAI Orchestrator MVP Scope
+
+## Product objective
+
+Build a Salesforce-based agentic renewable-energy orchestration prototype
+that evaluates synthetic portfolio conditions every 15 minutes and selects
+a safe cluster of energy actions.
+
+## Target
+
+F3 / D2
+
+- F3: Simulate changing conditions over time.
+- D2: Use structured and textual inputs with demonstrable reliability.
+
+## Portfolio represented
+
+- 5 solar farms
+- 3 wind farms
+- 2 battery energy storage systems
+- Aggregated industrial demand
+- 1 grid connection
+
+## Inputs
+
+- Solar generation and forecast
+- Wind generation and forecast
+- Current and forecast demand
+- Battery state of charge and availability
+- Grid import/export limits
+- Electricity buy and sell price
+- Forecast confidence
+
+All inputs are synthetic and must be labelled as synthetic.
+
+## Supported actions
+
+- Charge battery
+- Discharge battery
+- Buy electricity
+- Sell electricity
+- Reserve battery capacity
+- Curtail renewable generation
+
+## Objective modes
+
+- Balanced
+- Cost First
+- Clean Energy First
+- Reliability First
+
+## Demonstration scenarios
+
+1. Cloud Front
+2. Price Spike
+3. Demand Surge
+4. Battery Outage
+
+## Simulation
+
+- Eight intervals
+- Fifteen minutes per interval
+- Two-hour total horizon
+
+## Agentic implementation
+
+One Agentforce Orchestrator invokes approved Apex or Flow actions.
+
+Agentforce interprets the situation and explains the result.
+
+Deterministic Apex services calculate quantities, enforce constraints,
+score candidates and select the action cluster.
+
+Agentforce must not invent numeric dispatch values or bypass constraints.
+
+## User interface
+
+React and TypeScript using Salesforce Multi-Framework.
+
+No LWC is used for the operator console.
+
+## Salesforce objects
+
+1. Energy_Asset__c
+2. Operating_Snapshot__c
+3. Battery_State__c
+4. Market_Signal__c
+5. Decision__c
+6. Action__c
+7. Scenario__c
+
+## Mandatory demo evidence
+
+- Current portfolio dashboard
+- Objective-mode selection
+- Recommended action cluster
+- Before-and-after event comparison
+- Eight-interval scenario simulation
+- Agentforce explanation
+- Decision and action audit trail
+- Correlation ID
+- Approval status for low-confidence decisions
+
+## Deferred features
+
+- Real weather API integration
+- Real electricity-market integration
+- SCADA, IoT or physical equipment integration
+- Production dispatch
+- Machine-learning forecasting
+- Multiple independent autonomous agents
+- Mathematical programming or external Python optimization
+- Maintenance scheduling
+- Generic scenario builder
+- D3 multimodal inputs
+- Mobile optimization
+- Production-grade CI/CD
+- Platform Events unless the core demo finishes early
+- Node BFF unless technically required
+
+## Scope rule
+
+A deferred feature cannot enter development until the complete MVP demo
+works from reset through audit.
