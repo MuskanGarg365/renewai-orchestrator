@@ -1,8 +1,7 @@
 @IsTest
 private class RenewAIPortfolioServiceTest {
 
-    static final Datetime AS_OF =
-        Datetime.newInstanceGmt(2026, 10, 8, 12, 0, 0);
+    static final Datetime AS_OF = Datetime.newInstanceGmt(2026, 10, 8, 12, 0, 0);
 
     @TestSetup
     static void setupData() {
@@ -26,7 +25,7 @@ private class RenewAIPortfolioServiceTest {
         };
 
         insert new Battery_State__c(
-            Name = ids.get('BATTERY_MH_01'),
+            Energy_Asset__c = ids.get('BATTERY_MH_01'),
             Battery_State_Key__c = 'BATTERY-1200',
             Timestamp__c = AS_OF,
             State_Of_Charge__c = 70,
@@ -37,10 +36,21 @@ private class RenewAIPortfolioServiceTest {
     }
 
     @IsTest
+    static void marketPriceIsReturned() {
+        insert new Market_Signal__c(
+            Name = 'MKT-1200',
+            Market_Signal_Key__c = 'MKT-1200',
+            Timestamp__c = AS_OF,
+            Energy_Price_MWh__c = 4200
+        );
+        RenewAIDTO.PortfolioResponse res = RenewAIPortfolioService.getPortfolio(request(AS_OF), 'TEST-002');
+        System.assertEquals(4200, res.metrics.energyPriceMWh);
+    }
+
+    @IsTest
     static void validPortfolio() {
         Test.startTest();
-        RenewAIDTO.PortfolioResponse res =
-            RenewAIPortfolioService.getPortfolio(request(AS_OF), 'TEST-001');
+        RenewAIDTO.PortfolioResponse res = RenewAIPortfolioService.getPortfolio(request(AS_OF), 'TEST-001');
         Test.stopTest();
 
         System.assertEquals(true, res.success);
@@ -54,79 +64,46 @@ private class RenewAIPortfolioServiceTest {
 
     @IsTest
     static void nullRequest() {
-        assertError(
-            new ValidationCall('NULL_REQUEST'),
-            'REQUIRED'
-        );
+        assertError(new ValidationCall('NULL_REQUEST'), 'REQUIRED');
     }
 
     @IsTest
     static void misalignedTimestamp() {
-        assertError(
-            new ValidationCall('MISALIGNED'),
-            'INTERVAL_MISALIGNED'
-        );
+        assertError(new ValidationCall('MISALIGNED'), 'INTERVAL_MISALIGNED');
     }
 
     @IsTest
     static void staleSnapshot() {
-        assertError(
-            new ValidationCall('STALE'),
-            'STALE_DATA'
-        );
+        assertError(new ValidationCall('STALE'), 'STALE_DATA');
     }
 
     @IsTest
     static void invalidSoc() {
-        assertError(
-            new ValidationCall('SOC'),
-            'SOC_OUT_OF_RANGE'
-        );
+        assertError(new ValidationCall('SOC'), 'SOC_OUT_OF_RANGE');
     }
 
     private class ValidationCall {
         String testType;
-        ValidationCall(String testType) {
-            this.testType = testType;
-        }
+        ValidationCall(String testType) { this.testType = testType; }
 
         void execute() {
             if (testType == 'NULL_REQUEST')
                 RenewAIInputValidator.validateRequest(null);
-
             if (testType == 'MISALIGNED')
-                RenewAIInputValidator.validateRequest(
-                    request(AS_OF.addMinutes(7))
-                );
-
+                RenewAIInputValidator.validateRequest(request(AS_OF.addMinutes(7)));
             if (testType == 'STALE')
-                RenewAIInputValidator.validateSnapshot(
-                    snapshot(null, null, 20, 0, AS_OF.addMinutes(-45)),
-                    AS_OF,
-                    30
-                );
-
+                RenewAIInputValidator.validateSnapshot(snapshot(null, null, 20, 0, AS_OF.addMinutes(-45)), AS_OF, 30);
             if (testType == 'SOC')
-                RenewAIInputValidator.validateBatteryState(
-                    battery(105),
-                    AS_OF,
-                    30
-                );
+                RenewAIInputValidator.validateBatteryState(battery(105), AS_OF, 30);
         }
     }
 
-    private static void assertError(
-        ValidationCall validationCall,
-        String expectedCode
-    ) {
+    private static void assertError(ValidationCall validationCall, String expectedCode) {
         try {
             validationCall.execute();
             System.assert(false, 'Expected validation exception.');
         } catch (RenewAIValidationException e) {
-            System.assertEquals(
-                expectedCode,
-                e.validationErrors[0].code
-            );
+            System.assertEquals(expectedCode, e.validationErrors[0].code);
         }
     }
 
@@ -138,12 +115,7 @@ private class RenewAIPortfolioServiceTest {
         return r;
     }
 
-    private static RenewAI_Energy_Asset__c asset(
-        String code,
-        String name,
-        String type,
-        Decimal capacity
-    ) {
+    private static RenewAI_Energy_Asset__c asset(String code, String name, String type, Decimal capacity) {
         return new RenewAI_Energy_Asset__c(
             Name = name,
             Asset_Code__c = code,
@@ -153,21 +125,12 @@ private class RenewAIPortfolioServiceTest {
         );
     }
 
-    private static Operating_Snapshot__c snapshot(
-        Id assetId,
-        String key,
-        Decimal generation,
-        Decimal demand
-    ) {
+    private static Operating_Snapshot__c snapshot(Id assetId, String key, Decimal generation, Decimal demand) {
         return snapshot(assetId, key, generation, demand, AS_OF);
     }
 
     private static Operating_Snapshot__c snapshot(
-        Id assetId,
-        String key,
-        Decimal generation,
-        Decimal demand,
-        Datetime timestampValue
+        Id assetId, String key, Decimal generation, Decimal demand, Datetime timestampValue
     ) {
         return new Operating_Snapshot__c(
             Energy_Asset__c = assetId,

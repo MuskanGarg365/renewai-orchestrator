@@ -27,6 +27,8 @@ public class RenewAIDTO {
         public Decimal availableBatteryEnergyMWh { get; set; }
         public Decimal gridCapacityMW { get; set; }
         public Decimal gridHeadroomMW { get; set; }
+        public Decimal energyPriceMWh { get; set; }
+        public Datetime priceTimestamp { get; set; }
     }
 
     public class PortfolioResponse {
@@ -59,11 +61,7 @@ public class RenewAIDTO {
         public String code { get; set; }
         public String message { get; set; }
 
-        public ErrorDetail(
-            String field,
-            String code,
-            String message
-        ) {
+        public ErrorDetail(String field, String code, String message) {
             this.field = field;
             this.code = code;
             this.message = message;
