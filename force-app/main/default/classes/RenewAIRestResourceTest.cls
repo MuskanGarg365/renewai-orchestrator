@@ -1,19 +1,16 @@
 @IsTest
 private class RenewAIRestResourceTest {
 
-    static final Datetime AS_OF =
-        Datetime.newInstanceGmt(2026, 10, 8, 12, 0, 0);
+    static final Datetime AS_OF = Datetime.newInstanceGmt(2026, 10, 8, 12, 0, 0);
 
     @TestSetup
     static void setupData() {
-        List<RenewAI_Energy_Asset__c> assets =
-            new List<RenewAI_Energy_Asset__c>{
-                asset('SOLAR_MH_01', 'Solar Asset', 'Solar', 50),
-                asset('WIND_MH_01', 'Wind Asset', 'Wind', 75),
-                asset('IND_DEMAND_01', 'Industrial Demand', 'Industrial Demand', 150),
-                asset('GRID_INDIA_01', 'Grid', 'Grid', 500)
-            };
-
+        List<RenewAI_Energy_Asset__c> assets = new List<RenewAI_Energy_Asset__c>{
+            asset('SOLAR_MH_01', 'Solar Asset', 'Solar', 50),
+            asset('WIND_MH_01', 'Wind Asset', 'Wind', 75),
+            asset('IND_DEMAND_01', 'Industrial Demand', 'Industrial Demand', 150),
+            asset('GRID_INDIA_01', 'Grid', 'Grid', 500)
+        };
         insert assets;
 
         Map<String, Id> ids = new Map<String, Id>();
@@ -30,14 +27,9 @@ private class RenewAIRestResourceTest {
     @IsTest
     static void testAssets() {
         RestResponse res = call('/assets', null);
-
         System.assertEquals(200, res.statusCode);
 
-        Map<String, Object> body =
-            (Map<String, Object>)JSON.deserializeUntyped(
-                res.responseBody.toString()
-            );
-
+        Map<String, Object> body = (Map<String, Object>)JSON.deserializeUntyped(res.responseBody.toString());
         System.assertEquals(true, body.get('success'));
         System.assertNotEquals(null, body.get('correlationId'));
     }
@@ -49,25 +41,12 @@ private class RenewAIRestResourceTest {
             'intervalMinutes' => '10',
             'maximumAgeMinutes' => '30'
         };
-
         RestResponse res = call('/portfolio', params);
-
         System.assertEquals(400, res.statusCode);
 
-        Map<String, Object> body =
-            (Map<String, Object>)JSON.deserializeUntyped(
-                res.responseBody.toString()
-            );
-
-        System.assertEquals(
-            'VALIDATION_ERROR',
-            body.get('errorCode')
-        );
-
-        System.assertNotEquals(
-            null,
-            body.get('correlationId')
-        );
+        Map<String, Object> body = (Map<String, Object>)JSON.deserializeUntyped(res.responseBody.toString());
+        System.assertEquals('VALIDATION_ERROR', body.get('errorCode'));
+        System.assertNotEquals(null, body.get('correlationId'));
     }
 
     @IsTest
@@ -77,36 +56,22 @@ private class RenewAIRestResourceTest {
             'intervalMinutes' => '15',
             'maximumAgeMinutes' => '30'
         };
-
         RestResponse res = call('/portfolio', params);
-
         System.assertEquals(400, res.statusCode);
     }
 
     @IsTest
     static void testUnknownEndpoint() {
         RestResponse res = call('/unknown', null);
-
         System.assertEquals(404, res.statusCode);
 
-        Map<String, Object> body =
-            (Map<String, Object>)JSON.deserializeUntyped(
-                res.responseBody.toString()
-            );
-
-        System.assertEquals(
-            'RESOURCE_NOT_FOUND',
-            body.get('errorCode')
-        );
+        Map<String, Object> body = (Map<String, Object>)JSON.deserializeUntyped(res.responseBody.toString());
+        System.assertEquals('RESOURCE_NOT_FOUND', body.get('errorCode'));
     }
 
-    private static RestResponse call(
-        String path,
-        Map<String, String> params
-    ) {
+    private static RestResponse call(String path, Map<String, String> params) {
         RestRequest req = new RestRequest();
-        req.requestUri =
-            '/services/apexrest/renewai/v1' + path;
+        req.requestUri = '/services/apexrest/renewai/v1' + path;
         req.httpMethod = 'GET';
 
         if (params != null)
@@ -123,12 +88,7 @@ private class RenewAIRestResourceTest {
         return RestContext.response;
     }
 
-    private static RenewAI_Energy_Asset__c asset(
-        String code,
-        String name,
-        String type,
-        Decimal capacity
-    ) {
+    private static RenewAI_Energy_Asset__c asset(String code, String name, String type, Decimal capacity) {
         return new RenewAI_Energy_Asset__c(
             Name = name,
             Asset_Code__c = code,
@@ -138,12 +98,7 @@ private class RenewAIRestResourceTest {
         );
     }
 
-    private static Operating_Snapshot__c snapshot(
-        Id assetId,
-        String key,
-        Decimal generation,
-        Decimal demand
-    ) {
+    private static Operating_Snapshot__c snapshot(Id assetId, String key, Decimal generation, Decimal demand) {
         return new Operating_Snapshot__c(
             Energy_Asset__c = assetId,
             Snapshot_Key__c = key,
