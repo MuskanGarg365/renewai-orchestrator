@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <types>
+    <members>RenewAIDTO</members>
+    <members>RenewAIValidationException</members>
+    <members>RenewAIInputValidator</members>
+    <members>RenewAIPortfolioService</members>
+    <members>RenewAIRestResource</members>
+    <members>RenewAIPortfolioServiceTest</members>
+    <members>RenewAIRestResourceTest</members>
+    <name>ApexClass</name>
+    </types>
+    <types>
+        <members>RenewAI_Admin</members>
+        <members>RenewAI_Operator</members>
+        <name>PermissionSet</name>
+    </types>
+    <version>65.0</version>
+
+</Package>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Capacity_Must_Be_Positive</fullName>
+    <active>true</active>
+    <errorConditionFormula>Capacity_MW__c &lt;= 0</errorConditionFormula>
+    <errorMessage>Capacity must be greater than zero MW.</errorMessage>
+</ValidationRule>
