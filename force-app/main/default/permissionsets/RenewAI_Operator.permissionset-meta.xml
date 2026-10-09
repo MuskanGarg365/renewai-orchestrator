@@ -267,4 +267,28 @@
         <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <classAccesses>
+    <apexClass>RenewAIDTO</apexClass>
+    <enabled>true</enabled>
+</classAccesses>
+
+<classAccesses>
+    <apexClass>RenewAIValidationException</apexClass>
+    <enabled>true</enabled>
+</classAccesses>
+
+<classAccesses>
+    <apexClass>RenewAIInputValidator</apexClass>
+    <enabled>true</enabled>
+</classAccesses>
+
+<classAccesses>
+    <apexClass>RenewAIPortfolioService</apexClass>
+    <enabled>true</enabled>
+</classAccesses>
+
+<classAccesses>
+    <apexClass>RenewAIRestResource</apexClass>
+    <enabled>true</enabled>
+</classAccesses>
 </PermissionSet>

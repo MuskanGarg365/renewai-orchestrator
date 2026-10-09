@@ -1,46 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
-    <!-- Custom Objects -->
     <types>
-        <members>RenewAI_Energy_Asset__c</members>
-        <members>Operating_Snapshot__c</members>
-        <members>Battery_State__c</members>
-        <members>Market_Signal__c</members>
-        <members>Decision__c</members>
-        <members>Action__c</members>
-        <members>Scenario__c</members>
-        <name>CustomObject</name>
+    <members>RenewAIDTO</members>
+    <members>RenewAIValidationException</members>
+    <members>RenewAIInputValidator</members>
+    <members>RenewAIPortfolioService</members>
+    <members>RenewAIRestResource</members>
+    <members>RenewAIPortfolioServiceTest</members>
+    <members>RenewAIRestResourceTest</members>
+    <name>ApexClass</name>
     </types>
-
-    <!-- Permission Sets -->
     <types>
         <members>RenewAI_Admin</members>
         <members>RenewAI_Operator</members>
         <name>PermissionSet</name>
     </types>
-
-    <!-- Custom Tabs -->
-    <types>
-        <members>RenewAI_Energy_Asset__c</members>
-        <members>Operating_Snapshot__c</members>
-        <members>Battery_State__c</members>
-        <members>Market_Signal__c</members>
-        <members>Decision__c</members>
-        <members>Action__c</members>
-        <members>Scenario__c</members>
-        <name>CustomTab</name>
-    </types>
-
-    <!-- Validation Rules -->
-    <types>
-        <members>RenewAI_Energy_Asset__c.Capacity_Must_Be_Positive</members>
-        <members>Operating_Snapshot__c.Generation_must_be_positive</members>
-        <members>Battery_State__c.SOC_Range</members>
-        <members>Decision__c.Confidence_Range</members>
-        <name>ValidationRule</name>
-    </types>
-
     <version>65.0</version>
 
 </Package>
