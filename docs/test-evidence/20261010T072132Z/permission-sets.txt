@@ -1,0 +1,11 @@
+Querying Data... done
+┌─────────────────────────┐
+│ PERMISSIONSET.NAME      │
+├─────────────────────────┤
+│ RenewAI_Operator        │
+│ RenewAI_Admin           │
+│ RenewAI_Decision_Access │
+│ RenewAI_Agent_Access    │
+└─────────────────────────┘
+
+[1mTotal number of records retrieved: 4.[22m

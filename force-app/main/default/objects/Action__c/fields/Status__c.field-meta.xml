@@ -29,6 +29,16 @@
                 <default>false</default>
                 <label>Failed</label>
             </value>
+            <value>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+                <label>Awaiting Approval</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

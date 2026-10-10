@@ -1,0 +1,126 @@
+
+> base-react-app@1.59.0 test
+> vitest --run
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.11 [39m[90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai[39m
+
+ [32m✓[39m src/components/audit/AuditPanel.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 174[2mms[22m[39m
+[90mstderr[2m | src/components/approval/ApprovalBar.test.tsx[2m > [22m[2mApprovalBar[2m > [22m[2mexplains a 403 clearly
+[22m[39mRenewAIApiError: nope
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/approval/ApprovalBar.test.tsx:52:9
+    at Mock [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/spy[24m/dist/index.js:332:34[90m)[39m
+    at approveDecision [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/approval/ApprovalBar.test.tsx:13:46[90m)[39m
+    at decide [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/approval/ApprovalBar.tsx:25:30[90m)[39m
+    at onClick [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/approval/ApprovalBar.tsx:71:48[90m)[39m
+    at executeDispatch [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20804:9[90m)[39m
+    at runWithFiberInDEV [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:1048:13[90m)[39m
+    at processDispatchQueue [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20854:19[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:3437:40[90m)[39m {
+  kind: [32m'forbidden'[39m,
+  status: [33m403[39m,
+  correlationId: [32m'RENEWAI-403'[39m
+}
+
+ [32m✓[39m src/components/approval/ApprovalBar.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 192[2mms[22m[39m
+[90mstderr[2m | src/components/decision/DecisionPanel.test.tsx[2m > [22m[2mDecisionPanel[2m > [22m[2mshows the structured error and its correlation id when the call fails
+[22m[39mRenewAIApiError: The request failed validation.
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.test.tsx:41:9
+    at Mock [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/spy[24m/dist/index.js:332:34[90m)[39m
+    at runDecision [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.test.tsx:14:42[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/hooks/useDecision.ts:26:30
+    at onClick [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.tsx:57:21[90m)[39m
+    at executeDispatch [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20804:9[90m)[39m
+    at runWithFiberInDEV [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:1048:13[90m)[39m
+    at processDispatchQueue [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20854:19[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:3437:40[90m)[39m {
+  kind: [32m'validation'[39m,
+  status: [33m400[39m,
+  correlationId: [32m'RENEWAI-ERR1'[39m
+}
+
+[90mstderr[2m | src/components/scenario/ScenarioPanel.test.tsx[2m > [22m[2mScenarioPanel[2m > [22m[2mshows the structured error when the scenario fails
+[22m[39mRenewAIApiError: Scenario failed.
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/scenario/ScenarioPanel.test.tsx:48:22
+    at Mock [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/spy[24m/dist/index.js:332:34[90m)[39m
+    at runScenario [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/scenario/ScenarioPanel.test.tsx:14:42[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/hooks/useScenario.ts:30:30
+    at onClick [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/scenario/ScenarioPanel.tsx:103:28[90m)[39m
+    at executeDispatch [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20804:9[90m)[39m
+    at runWithFiberInDEV [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:1048:13[90m)[39m
+    at processDispatchQueue [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20854:19[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:3437:40[90m)[39m {
+  kind: [32m'server'[39m,
+  status: [33m500[39m,
+  correlationId: [32m'RENEWAI-ERR2'[39m
+}
+
+[90mstderr[2m | src/pages/Home.test.tsx[2m > [22m[2mHome dashboard[2m > [22m[2mshows a forbidden state and retries
+[22m[39mRenewAIApiError: Access denied.
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/pages/Home.test.tsx:47:30
+    at [90mfile:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+    at [90mfile:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+    at [90mfile:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+    at [90mfile:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+    at [90mfile:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2956:64 {
+  kind: [32m'forbidden'[39m,
+  status: [33m403[39m,
+  correlationId: [32m'RENEWAI-X'[39m
+}
+
+ [32m✓[39m src/components/scenario/ScenarioPanel.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 230[2mms[22m[39m
+[90mstderr[2m | src/components/decision/DecisionPanel.test.tsx[2m > [22m[2mDecisionPanel[2m > [22m[2mkeeps the last good result visible, labelled as a fallback, when a later run fails
+[22m[39mRenewAIApiError: Could not reach Salesforce.
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.test.tsx:55:11
+    at Mock [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/spy[24m/dist/index.js:332:34[90m)[39m
+    at runDecision [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.test.tsx:14:42[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/hooks/useDecision.ts:26:30
+    at onClick [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/decision/DecisionPanel.tsx:57:21[90m)[39m
+    at executeDispatch [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20804:9[90m)[39m
+    at runWithFiberInDEV [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:1048:13[90m)[39m
+    at processDispatchQueue [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20854:19[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:3437:40[90m)[39m {
+  kind: [32m'network'[39m,
+  status: [33m503[39m,
+  correlationId: [32m'RENEWAI-DOWN'[39m
+}
+
+ [32m✓[39m src/pages/Home.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 238[2mms[22m[39m
+ [32m✓[39m src/components/decision/DecisionPanel.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 282[2mms[22m[39m
+[90mstderr[2m | src/components/simulation/SimulationPanel.test.tsx[2m > [22m[2mSimulationPanel[2m > [22m[2mshows the structured error and correlation id when the run fails
+[22m[39mRenewAIApiError: Simulation failed.
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/simulation/SimulationPanel.test.tsx:95:22
+    at Mock [90m(file:///Users/betumittal/Desktop/ET%20Hackathon%20Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4m@vitest/spy[24m/dist/index.js:332:34[90m)[39m
+    at runSimulation [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/simulation/SimulationPanel.test.tsx:15:44[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/hooks/useSimulation.ts:44:30
+    at onClick [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39msrc/components/simulation/SimulationPanel.tsx:140:30[90m)[39m
+    at executeDispatch [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20804:9[90m)[39m
+    at runWithFiberInDEV [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:1048:13[90m)[39m
+    at processDispatchQueue [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:20854:19[90m)[39m
+    at [90m/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 [90m(/Users/betumittal/Desktop/ET Hackathon Project/renewai-orchestrator/force-app/main/default/uiBundles/renewai/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom-client.development.js:3437:40[90m)[39m {
+  kind: [32m'server'[39m,
+  status: [33m500[39m,
+  correlationId: [32m'RENEWAI-ERR3'[39m
+}
+
+ [32m✓[39m src/components/simulation/SimulationPanel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 354[2mms[22m[39m
+ [32m✓[39m src/api/renewaiClient.approval.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2325[2mms[22m[39m
+     [33m[2m✓[22m[39m records a Pending decision, then approves it once [33m 1111[2mms[22m[39m
+     [33m[2m✓[22m[39m needs a note to reject [33m 655[2mms[22m[39m
+     [33m[2m✓[22m[39m does not list decisions that need no approval as Pending [33m 554[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m   Start at [22m 12:52:03
+[2m   Duration [22m 3.39s[2m (transform 1.24s, setup 845ms, import 6.51s, tests 3.80s, environment 4.26s)[22m
+
+vitest exit code: 0

@@ -1,0 +1,152 @@
+=== Test Results
+TEST NAME                                                                           OUTCOME  MESSAGE                                                                           RUNTIME (MS)
+──────────────────────────────────────────────────────────────────────────────────  ───────  ────────────────────────────────────────────────────────────────────────────────  ────────────
+RenewAIScenarioServiceTest.batteryOutageRemovesTheOnlyBatteryFromDispatch           Pass                                                                                       359         
+RenewAIScenarioServiceTest.cloudFrontChangesTheInputs                               Pass                                                                                       207         
+RenewAIScenarioServiceTest.everyScenarioSavesLinkedBeforeAndAfterDecisions          Pass                                                                                       938         
+RenewAIScenarioServiceTest.restPostRunsAScenario                                    Pass                                                                                       206         
+RenewAIScenarioServiceTest.unknownScenarioIsRejectedAndNothingIsSaved               Pass                                                                                       19          
+RenewAIScenarioCatalogTest.batteryOutageLimitsDischargeToTheRemainingUnit           Pass                                                                                       36          
+RenewAIScenarioCatalogTest.batteryOutageTakesTheFirstUnitOffline                    Pass                                                                                       3           
+RenewAIScenarioCatalogTest.cloudFrontCutsSolarAndConfidence                         Pass                                                                                       3           
+RenewAIScenarioCatalogTest.cloudFrontRaisesReserveAndNeedsApproval                  Pass                                                                                       23          
+RenewAIScenarioCatalogTest.demandSurgeDischargesMore                                Pass                                                                                       16          
+RenewAIScenarioCatalogTest.demandSurgeRaisesDemand                                  Pass                                                                                       2           
+RenewAIScenarioCatalogTest.everyScenarioGivesAFeasibleBalancedDecision              Pass                                                                                       73          
+RenewAIScenarioCatalogTest.intensityScalesTheDisturbance                            Pass                                                                                       2           
+RenewAIScenarioCatalogTest.priceSpikeIncreasesTradingValue                          Pass                                                                                       12          
+RenewAIScenarioCatalogTest.priceSpikeRaisesThePrice                                 Pass                                                                                       2           
+RenewAIScenarioCatalogTest.unknownScenarioIsRejected                                Pass                                                                                       4           
+RenewAIApprovalRestTest.approvalWithBrokenJsonGets400                               Pass                                                                                       47          
+RenewAIApprovalRestTest.auditListRejectsBadStatus                                   Pass                                                                                       8           
+RenewAIApprovalRestTest.auditListReturns200                                         Fail     System.AssertException: Assertion Failed: Expected: 200, Actual: 404              
+                                                                                             Class.RenewAIApprovalRestTest.auditListReturns200: line 64, column 1                          
+RenewAIApprovalRestTest.badOutcomeGets400                                           Pass                                                                                       6           
+RenewAIApprovalRestTest.nonApproverGets403                                          Pass                                                                                       6           
+RenewAIDecisionEngineTest.baselineIsDeterministic                                   Pass                                                                                       79          
+RenewAIDecisionEngineTest.invalidModeIsRejected                                     Pass                                                                                       10          
+RenewAIDecisionEngineTest.lowConfidenceRaisesReserveAndRequiresApproval             Pass                                                                                       24          
+RenewAIDecisionEngineTest.lowSocNeverDischargesBelowTheMinimum                      Pass                                                                                       17          
+RenewAIDecisionEngineTest.missingPriceIsRejected                                    Pass                                                                                       7           
+RenewAIDecisionEngineTest.objectiveModeChangesTheWinner                             Pass                                                                                       23          
+RenewAIDecisionEngineTest.selectedActionsKeepThePowerBalance                        Pass                                                                                       30          
+RenewAIDecisionEngineTest.surplusIsSoldOrStoredNotWasted                            Pass                                                                                       14          
+RenewAIDecisionEngineTest.unavailableBatteryIsNeverUsed                             Pass                                                                                       13          
+RenewAIRestResourceTest.testAssets                                                  Pass                                                                                       23          
+RenewAIRestResourceTest.testInvalidInterval                                         Pass                                                                                       7           
+RenewAIRestResourceTest.testMisalignedTime                                          Pass                                                                                       6           
+RenewAIRestResourceTest.testUnknownEndpoint                                         Pass                                                                                       5           
+RenewAIPortfolioServiceTest.invalidSoc                                              Pass                                                                                       12          
+RenewAIPortfolioServiceTest.marketPriceIsReturned                                   Pass                                                                                       97          
+RenewAIPortfolioServiceTest.misalignedTimestamp                                     Pass                                                                                       3           
+RenewAIPortfolioServiceTest.nullRequest                                             Pass                                                                                       3           
+RenewAIPortfolioServiceTest.staleSnapshot                                           Fail     System.AssertException: Assertion Failed: Expected: STALE_DATA, Actual: REQUIRED  
+                                                                                             Class.RenewAIPortfolioServiceTest.assertError: line 106, column 1                 
+                                                                                             Class.RenewAIPortfolioServiceTest.staleSnapshot: line 77, column 1                            
+RenewAIPortfolioServiceTest.validPortfolio                                          Pass                                                                                       25          
+RenewAISmokeTest.validateSchema                                                     Pass                                                                                       164         
+RenewAISmokeTest.validateSeedData                                                   Fail     System.AssertException: Assertion Failed: Seed data missing                       
+                                                                                             Class.RenewAISmokeTest.validateSeedData: line 30, column 1                                    
+RenewAISimulationServiceTest.aMidRunFailureRollsBackAndLeavesAFailedAuditRow        Pass                                                                                       1009        
+RenewAISimulationServiceTest.batteryOutageCompletes                                 Pass                                                                                       822         
+RenewAISimulationServiceTest.cancelMarksTheScenarioCancelled                        Pass                                                                                       853         
+RenewAISimulationServiceTest.cancelRejectsBadInput                                  Pass                                                                                       22          
+RenewAISimulationServiceTest.cloudFrontCompletes                                    Pass                                                                                       868         
+RenewAISimulationServiceTest.comparisonCanBeSwitchedOff                             Pass                                                                                       734         
+RenewAISimulationServiceTest.demandSurgeCompletes                                   Pass                                                                                       852         
+RenewAISimulationServiceTest.invalidInputIsRejectedBeforeAnythingIsSaved            Pass                                                                                       14          
+RenewAISimulationServiceTest.priceSpikeCompletes                                    Pass                                                                                       849         
+RenewAISimulationServiceTest.restPostRunsAndCancelsASimulation                      Pass                                                                                       737         
+RenewAISimulationServiceTest.simulationSavesLinkedDecisionsAndCompletesTheScenario  Pass                                                                                       828         
+RenewAISimulationServiceTest.twoRunsAreRepeatable                                   Pass                                                                                       1658        
+RenewAIDecisionServiceTest.batteryRateLimitRejectsCoveringTheWholeGap               Pass                                                                                       195         
+RenewAIDecisionServiceTest.invalidModeIsRejectedAndNothingIsSaved                   Pass                                                                                       26          
+RenewAIDecisionServiceTest.misalignedTimeIsRejected                                 Pass                                                                                       3           
+RenewAIDecisionServiceTest.restPostRejectsBadJson                                   Pass                                                                                       7           
+RenewAIDecisionServiceTest.restPostReturnsDecision                                  Pass                                                                                       73          
+RenewAIDecisionServiceTest.runPersistsDecisionAndActions                            Pass                                                                                       98          
+RenewAIApprovalServiceTest.alreadyDecidedIsRefused                                  Pass                                                                                       372         
+RenewAIApprovalServiceTest.approveMovesActionsToPlanned                             Pass                                                                                       151         
+RenewAIApprovalServiceTest.auditListsNewestFirstWithCountsAndFilter                 Pass                                                                                       124         
+RenewAIApprovalServiceTest.badOutcomeIsRefused                                      Pass                                                                                       62          
+RenewAIApprovalServiceTest.rejectMovesActionsToRejected                             Pass                                                                                       145         
+RenewAIApprovalServiceTest.rejectNeedsANote                                         Pass                                                                                       61          
+RenewAIApprovalServiceTest.unknownAndMalformedIdsAreRefused                         Pass                                                                                       35          
+RenewAIApprovalServiceTest.userWithoutPermissionIsRefused                           Pass                                                                                       72          
+RenewAISimulationEngineTest.aSimulationNeedsEightIntervals                          Pass                                                                                       30          
+RenewAISimulationEngineTest.actionsChangeAcrossTheTwoHours                          Pass                                                                                       165         
+RenewAISimulationEngineTest.batteryChargeCarriesOverAndNeverLeavesTheLimits         Pass                                                                                       46          
+RenewAISimulationEngineTest.batteryOutageCostFirstGolden                            Pass                                                                                       42          
+RenewAISimulationEngineTest.cloudFrontBalancedGolden                                Pass                                                                                       45          
+RenewAISimulationEngineTest.cumulativeKpisAddUp                                     Pass                                                                                       46          
+RenewAISimulationEngineTest.demandSurgeBalancedGolden                               Pass                                                                                       48          
+RenewAISimulationEngineTest.differentObjectivesGiveDifferentChecksums               Pass                                                                                       79          
+RenewAISimulationEngineTest.everyScenarioAndObjectiveStaysFeasibleAndBalanced       Pass                                                                                       615         
+RenewAISimulationEngineTest.priceSpikeCostFirstGolden                               Pass                                                                                       45          
+RenewAISimulationEngineTest.profilesHaveEightSteps                                  Pass                                                                                       8           
+RenewAISimulationEngineTest.sameInputsGiveTheSameResult                             Pass                                                                                       80          
+RenewAIAgentActionsTest.explanationErrorsAreStructured                              Pass                                                                                       32          
+RenewAIAgentActionsTest.explanationForAScenarioReturnsTheDisturbedDecision          Pass                                                                                       331         
+RenewAIAgentActionsTest.explanationFoundByDecisionIdAndByCorrelationId              Pass                                                                                       123         
+RenewAIAgentActionsTest.portfolioStateReportsAMisalignedTimeAsAStructuredError      Pass                                                                                       7           
+RenewAIAgentActionsTest.portfolioStateReturnsNumbersAndCorrelationId                Pass                                                                                       31          
+RenewAIAgentActionsTest.runDecisionDefaultsToBalanced                               Pass                                                                                       100         
+RenewAIAgentActionsTest.runDecisionRejectsAnUnreadableTime                          Pass                                                                                       8           
+RenewAIAgentActionsTest.runDecisionSavesAndReturnsSetpoints                         Pass                                                                                       109         
+RenewAIAgentActionsTest.runDecisionToolFailureIsStructuredAndSavesNothing           Pass                                                                                       41          
+RenewAIAgentActionsTest.runScenarioRejectsAnUnknownScenario                         Pass                                                                                       15          
+RenewAIAgentActionsTest.runScenarioReturnsBeforeAndAfter                            Pass                                                                                       217         
+
+
+=== Apex Code Coverage by Class
+CLASSES                        PERCENT  UNCOVERED LINES        
+─────────────────────────────  ───────  ───────────────────────
+RenewAIInputValidator          59%      13,16,21,23,31,...     
+RenewAIDTO                     100%                            
+RenewAIPortfolioService        97%      210,216,223,230        
+RenewAIValidationException     100%                            
+RenewAIRestResource            72%      29,30,31,32,35,...     
+RenewAIDecisionService         95%      12,13,164,279,284,...  
+RenewAIDecisionEngine          93%      195,196,197,198,199,...
+RenewAIScenarioCatalog         99%      60                     
+RenewAIScenarioService         95%      12,13,25,80,81,...     
+RenewAIAgentGetPortfolioState  100%                            
+RenewAIAgentRunScenario        100%                            
+RenewAIAgentSupport            77%      33,59,63,65,66,...     
+RenewAIAgentRunDecision        100%                            
+RenewAIAgentGetExplanation     98%      83                     
+RenewAISimulationEngine        98%      40,170,226             
+RenewAISimulationService       97%      21,22,25,166           
+RenewAIApprovalService         89%      20,31,32,33,36,...     
+RenewAIAccessException         0%                              
+RenewAIAuditService            98%      86                     
+
+
+=== Test Setup Time by Test Class for Run 707NS00002el5PZ
+TEST SETUP METHOD NAME                  SETUP TIME
+──────────────────────────────────────  ──────────
+RenewAIScenarioServiceTest.setupData    198       
+RenewAIRestResourceTest.setupData       205       
+RenewAIPortfolioServiceTest.setupData   182       
+RenewAISimulationServiceTest.setupData  301       
+RenewAIDecisionServiceTest.setupData    112       
+RenewAIAgentActionsTest.setupData       195       
+
+
+=== Test Summary
+NAME                 VALUE              
+───────────────────  ───────────────────
+Outcome              Failed             
+Tests Ran            97                 
+Pass Rate            97%                
+Fail Rate            3%                 
+Skip Rate            0%                 
+Test Run Id          707NS00002el5PZ    
+Test Setup Time      1193 ms            
+Test Execution Time  15495 ms           
+Test Total Time      16688 ms           
+Org Id               00DNS00000upCID2A2 
+Username             1997vipul@gmail.com
+Org Wide Coverage    68%                
+
+apex exit code: 100
