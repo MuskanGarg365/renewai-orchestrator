@@ -8,6 +8,11 @@ import {
   type DataMode,
 } from '@/config';
 import type {
+  ApprovalOutcome,
+  ApprovalResponse,
+  ApprovalStatus,
+  AuditResponse,
+  AuditRow,
   DecisionResponse,
   ErrorResponse,
   ObjectiveMode,
@@ -21,6 +26,7 @@ import portfolioFixture from './fixtures/portfolio.json';
 import decisionFixtures from './fixtures/decisions.json';
 import scenarioFixtures from './fixtures/scenarios.json';
 import simulationFixtures from './fixtures/simulations.json';
+import { isOutageSimulated } from '@/lib/demoControls';
 
 export type ApiErrorKind =
   | 'session'
@@ -48,6 +54,18 @@ function kindForStatus(status: number): ApiErrorKind {
   if (status === 400) return 'validation';
   if (status === 404) return 'not_found';
   return 'server';
+}
+
+/** Demo switch: behaves like a failed Salesforce call, in live and fixture mode. */
+function guard(): void {
+  if (isOutageSimulated()) {
+    throw new RenewAIApiError(
+      'Simulated outage: the RenewAI service is unavailable.',
+      'network',
+      503,
+      'RENEWAI-SIMULATED'
+    );
+  }
 }
 
 type PlatformError = { message?: string; errorCode?: string };
@@ -138,13 +156,14 @@ export async function runDecision(
   mode: DataMode = DATA_MODE,
   asOf: string = resolveAsOf()
 ): Promise<DecisionResponse> {
+  guard();
   if (mode === 'fixture') {
     await new Promise(resolve => setTimeout(resolve, 250));
     const fixtures = decisionFixtures as unknown as Record<
       ObjectiveMode,
       DecisionResponse
     >;
-    return fixtures[objectiveMode];
+    return recordFixtureDecision(fixtures[objectiveMode]);
   }
 
   return request<DecisionResponse>('/decision', {
@@ -161,6 +180,7 @@ export async function runScenario(
   mode: DataMode = DATA_MODE,
   asOf: string = resolveAsOf()
 ): Promise<ScenarioResponse> {
+  guard();
   if (mode === 'fixture') {
     await new Promise(resolve => setTimeout(resolve, 300));
     const fixtures = scenarioFixtures as unknown as Record<
@@ -185,6 +205,7 @@ export async function runSimulation(
   asOf: string = resolveAsOf(),
   signal?: AbortSignal
 ): Promise<SimulationResponse> {
+  guard();
   if (mode === 'fixture') {
     await new Promise(resolve => setTimeout(resolve, 400));
     if (signal?.aborted) throw new RenewAIApiError('Cancelled.', 'network');
@@ -208,6 +229,7 @@ export async function cancelSimulation(
   scenarioId: string,
   mode: DataMode = DATA_MODE
 ): Promise<SimulationCancelResponse> {
+  guard();
   if (mode === 'fixture') {
     return {
       success: true,
@@ -222,4 +244,108 @@ export async function cancelSimulation(
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ scenarioId }),
   });
+}
+
+// ---------------------------------------------------------------- Day 9
+
+/** In-memory audit trail used in fixture mode so the approval flow works without an org. */
+let fixtureAudit: AuditRow[] = [];
+let fixtureCounter = 0;
+
+export function resetFixtureAudit(): void {
+  fixtureAudit = [];
+  fixtureCounter = 0;
+}
+
+function recordFixtureDecision(source: DecisionResponse): DecisionResponse {
+  fixtureCounter += 1;
+  const decisionId = `a0F${String(fixtureCounter).padStart(12, '0')}`;
+  const now = new Date().toISOString();
+  fixtureAudit.unshift({
+    decisionId,
+    name: `D-${String(fixtureCounter).padStart(4, '0')}`,
+    decisionType: source.selected.label,
+    objectiveMode: source.objectiveMode,
+    approvalStatus: source.approvalStatus as ApprovalStatus,
+    approvalNote: null,
+    confidence: Math.round(source.confidence * 10000) / 100,
+    score: source.selected.score ?? null,
+    snapshotTime: source.asOf,
+    correlationId: source.correlationId,
+    decidedBy: null,
+    decidedOn: null,
+    createdDate: now,
+    actionCount: source.selected.actions.length,
+  });
+  return { ...source, decisionId };
+}
+
+/** Approves or rejects a Pending decision. Rejecting needs a note. */
+export async function approveDecision(
+  decisionId: string,
+  outcome: ApprovalOutcome,
+  note: string,
+  mode: DataMode = DATA_MODE
+): Promise<ApprovalResponse> {
+  guard();
+  if (mode === 'fixture') {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    if (outcome === 'Rejected' && !note.trim()) {
+      throw new RenewAIApiError(
+        'A note is required when rejecting a decision. (NOTE_REQUIRED)',
+        'validation',
+        400,
+        'RENEWAI-FIXAPPR'
+      );
+    }
+    const row = fixtureAudit.find(r => r.decisionId === decisionId);
+    if (!row || row.approvalStatus !== 'Pending') {
+      throw new RenewAIApiError(
+        'Only decisions that are Pending can be approved or rejected. (NOT_PENDING)',
+        'validation',
+        400,
+        'RENEWAI-FIXAPPR'
+      );
+    }
+    row.approvalStatus = outcome;
+    row.approvalNote = note || null;
+    row.decidedBy = 'Demo approver';
+    row.decidedOn = new Date().toISOString();
+    return {
+      success: true,
+      correlationId: 'RENEWAI-FIXAPPR',
+      decisionId,
+      approvalStatus: outcome,
+      actionsUpdated: row.actionCount,
+      decidedBy: row.decidedBy,
+      decidedOn: row.decidedOn,
+    };
+  }
+
+  return request<ApprovalResponse>('/decision/approval', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ decisionId, outcome, note }),
+  });
+}
+
+/** Most recent decisions with their approval status (the audit trail). */
+export async function getAudit(
+  status?: ApprovalStatus,
+  mode: DataMode = DATA_MODE
+): Promise<AuditResponse> {
+  guard();
+  if (mode === 'fixture') {
+    await new Promise(resolve => setTimeout(resolve, 150));
+    return {
+      success: true,
+      correlationId: 'RENEWAI-FIXAUDIT',
+      canApprove: true,
+      rows: fixtureAudit.filter(r => !status || r.approvalStatus === status),
+    };
+  }
+
+  const query = new URLSearchParams({ limit: '20' });
+  if (status) query.set('status', status);
+  return request<AuditResponse>(`/decisions?${query.toString()}`);
 }

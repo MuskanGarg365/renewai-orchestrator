@@ -1,0 +1,29 @@
+PASS portfolio loads
+PASS Balanced decision saved
+PASS Balanced decision has a correlation id
+PASS Cost First decision saved
+PASS Cost First is Pending approval
+PASS bad outcome is a 400 VALIDATION_ERROR
+PASS rejecting without a note is refused
+FAIL approval refused: assign RenewAI_Approver to this user (or run the check as an approver)
+PASS audit trail loads
+PASS audit trail contains the Cost First decision
+PASS audit rejects an unknown status filter
+PASS invalid mode returns a structured error with a correlation id
+PASS a time with no data returns a structured error
+
+Timings (ms):
+    1414  GET /portfolio
+    1236  POST /decision
+    1243  POST /decision
+    1235  POST /decision/approval
+    1240  POST /decision/approval
+    1237  POST /decision/approval
+    1231  GET /decisions
+    1234  GET /decisions
+    1238  POST /decision
+    1235  POST /decision
+Wrote ../../../../../docs/test-evidence/20261010T072132Z/e2e-timings.json
+
+1 check(s) failed.
+e2e exit code: 1

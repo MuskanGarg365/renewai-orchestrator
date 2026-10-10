@@ -14,9 +14,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { StatusAlert } from '@/components/alerts/status-alert';
+import { ApprovalBar } from '@/components/approval/ApprovalBar';
+import { fmtTime } from '@/components/dashboard/format';
 import { ScoreBreakdown } from './ScoreBreakdown';
 
-export function DecisionPanel() {
+export function DecisionPanel({
+  onChanged,
+}: {
+  onChanged?: () => void;
+}) {
   const [objective, setObjective] = useState<ObjectiveMode>('Balanced');
   const { status, data, error, run } = useDecision(DATA_MODE);
 
@@ -46,7 +52,13 @@ export function DecisionPanel() {
               </option>
             ))}
           </select>
-          <Button onClick={() => run(objective)} disabled={status === 'running'}>
+          <Button
+            onClick={async () => {
+              await run(objective);
+              onChanged?.();
+            }}
+            disabled={status === 'running'}
+          >
             {status === 'running' ? 'Running…' : 'Run decision'}
           </Button>
         </div>
@@ -56,11 +68,22 @@ export function DecisionPanel() {
         <StatusAlert variant="error">
           {error.message}
           {error.correlationId ? ` (Correlation ID: ${error.correlationId})` : ''}
+          {data
+            ? ' Fallback: showing the last successful result below. It is not current and was not re-saved.'
+            : ' No earlier result is available yet.'}
         </StatusAlert>
       )}
 
-      {status === 'done' && data && (
-        <div className="space-y-4" data-testid="decision-result">
+      {(status === 'done' || status === 'error') && data && (
+        <div
+          className={status === 'error' ? 'space-y-4 opacity-60' : 'space-y-4'}
+          data-testid="decision-result"
+        >
+          {status === 'error' && (
+            <Badge variant="outline" data-testid="fallback-badge">
+              Fallback · last good result as of {fmtTime(data.asOf)}
+            </Badge>
+          )}
           <Card>
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -94,6 +117,14 @@ export function DecisionPanel() {
                 Score {data.selected.score?.toFixed(4)} · Reserve target{' '}
                 {data.reserveMW} MW
               </p>
+
+              {data.approvalStatus === 'Pending' && status === 'done' && (
+                <ApprovalBar
+                  key={data.decisionId}
+                  decisionId={data.decisionId}
+                  onDecided={onChanged}
+                />
+              )}
 
               <div className="grid gap-6 md:grid-cols-2">
                 <div>

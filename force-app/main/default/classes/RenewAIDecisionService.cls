@@ -229,7 +229,9 @@ public with sharing class RenewAIDecisionService {
                 Scheduled_Start__c = asOf,
                 Scheduled_End__c = asOf.addMinutes(
                     RenewAIInputValidator.INTERVAL_MINUTES),
-                Status__c = 'Planned'
+                Status__c = result.approvalStatus == 'Pending'
+                    ? 'Awaiting Approval'
+                    : 'Planned'
             ));
         }
 

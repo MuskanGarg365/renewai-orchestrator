@@ -1,0 +1,3 @@
+alias: LWC
+apiVersion: 67.0
+instanceUrl: https://dns00000upcid2a2-dev-ed.develop.my.salesforce.com

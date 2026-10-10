@@ -12,6 +12,7 @@
 // }
 
 
+import { useState } from 'react';
 import { DATA_MODE } from '@/config';
 import { usePortfolio } from '@/hooks/usePortfolio';
 import { Badge } from '@/components/ui/badge';
@@ -20,9 +21,12 @@ import { AssetTable } from '@/components/dashboard/AssetTable';
 import { BatteryCards } from '@/components/dashboard/BatteryCards';
 import { DataQualityBanner } from '@/components/dashboard/DataQualityBanner';
 import { KpiGrid } from '@/components/dashboard/KpiGrid';
+import { AuditPanel } from '@/components/audit/AuditPanel';
+import { DemoControls } from '@/components/DemoControls';
 import { DecisionPanel } from '@/components/decision/DecisionPanel';
 import { ScenarioPanel } from '@/components/scenario/ScenarioPanel';
 import { SimulationPanel } from '@/components/simulation/SimulationPanel';
+import { AgentChat } from '@/components/agents/AgentChat';
 import {
   EmptyView,
   ErrorView,
@@ -32,6 +36,7 @@ import { fmtTime } from '@/components/dashboard/format';
 
 export default function Home() {
   const { status, data, error, refreshing, reload } = usePortfolio(DATA_MODE);
+  const [auditKey, setAuditKey] = useState(0);
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
@@ -44,6 +49,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <DemoControls />
           <Badge variant={DATA_MODE === 'live' ? 'default' : 'outline'}>
             {DATA_MODE === 'live' ? 'Live' : 'Fixture'}
           </Badge>
@@ -61,12 +67,14 @@ export default function Home() {
           <DataQualityBanner data={data} mode={DATA_MODE} />
           <KpiGrid metrics={data.metrics} assets={data.assets} />
           <BatteryCards assets={data.assets} />
-          <DecisionPanel />
+          <DecisionPanel onChanged={() => setAuditKey(k => k + 1)} />
           <ScenarioPanel />
           <SimulationPanel />
+          <AuditPanel refreshKey={auditKey} />
           <AssetTable assets={data.assets} />
         </>
       )}
+      <AgentChat />
     </div>
   );
 }
