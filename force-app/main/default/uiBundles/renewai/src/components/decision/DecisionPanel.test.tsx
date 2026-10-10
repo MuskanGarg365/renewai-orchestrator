@@ -47,4 +47,31 @@ describe('DecisionPanel', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('RENEWAI-ERR1');
   });
+  it('keeps the last good result visible, labelled as a fallback, when a later run fails', async () => {
+    runDecision
+      .mockResolvedValueOnce(decisionFixtures['Balanced'])
+      .mockImplementationOnce(() =>
+        Promise.reject(
+          new RenewAIApiError('Could not reach Salesforce.', 'network', 503, 'RENEWAI-DOWN')
+        )
+      );
+    render(<DecisionPanel />);
+    const button = screen.getByRole('button', { name: /run decision/i });
+
+    await userEvent.click(button);
+    await screen.findByTestId('decision-result');
+    await userEvent.click(button);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/fallback/i);
+    expect(screen.getByTestId('fallback-badge')).toBeInTheDocument();
+    expect(screen.getByTestId('decision-label')).toBeInTheDocument();
+    expect(screen.queryByTestId('approval-bar')).not.toBeInTheDocument();
+  });
+
+  it('shows approval controls only when the decision is Pending', async () => {
+    runDecision.mockResolvedValue(decisionFixtures['Cost First']);
+    render(<DecisionPanel />);
+    await userEvent.click(screen.getByRole('button', { name: /run decision/i }));
+    expect(await screen.findByTestId('approval-bar')).toBeInTheDocument();
+  });
 });

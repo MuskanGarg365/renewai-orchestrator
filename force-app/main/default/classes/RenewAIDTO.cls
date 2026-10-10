@@ -336,4 +336,55 @@ public class RenewAIDTO {
             success = true;
         }
     }
+    // ---------------- Day 9: approval and audit ----------------
+
+    public class ApprovalRequest {
+        public String decisionId { get; set; }
+        public String outcome { get; set; }
+        public String note { get; set; }
+    }
+
+    public class ApprovalResponse {
+        public Boolean success { get; set; }
+        public String correlationId { get; set; }
+        public Id decisionId { get; set; }
+        public String approvalStatus { get; set; }
+        public Integer actionsUpdated { get; set; }
+        public String decidedBy { get; set; }
+        public Datetime decidedOn { get; set; }
+
+        public ApprovalResponse() {
+            success = true;
+        }
+    }
+
+    public class AuditRow {
+        public Id decisionId { get; set; }
+        public String name { get; set; }
+        public String decisionType { get; set; }
+        public String objectiveMode { get; set; }
+        public String approvalStatus { get; set; }
+        public String approvalNote { get; set; }
+        public Decimal confidence { get; set; }
+        public Decimal score { get; set; }
+        public Datetime snapshotTime { get; set; }
+        public String correlationId { get; set; }
+        public String decidedBy { get; set; }
+        public Datetime decidedOn { get; set; }
+        public Datetime createdDate { get; set; }
+        public Integer actionCount { get; set; }
+    }
+
+    public class AuditResponse {
+        public Boolean success { get; set; }
+        public String correlationId { get; set; }
+        public Boolean canApprove { get; set; }
+        public List<AuditRow> rows { get; set; }
+
+        public AuditResponse() {
+            success = true;
+            canApprove = false;
+            rows = new List<AuditRow>();
+        }
+    }
 }

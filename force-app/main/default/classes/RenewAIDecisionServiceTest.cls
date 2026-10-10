@@ -77,7 +77,12 @@ private class RenewAIDecisionServiceTest {
         ];
         System.assertEquals(response.selected.actions.size(), actions.size());
         for (Action__c a : actions) {
-            System.assertEquals('Planned', a.Status__c);
+            // Pending decisions wait for a human; the rest are ready to run.
+            System.assertEquals(
+                decisions[0].Approval_Status__c == 'Pending'
+                    ? 'Awaiting Approval'
+                    : 'Planned',
+                a.Status__c);
             System.assertEquals(decisions[0].Id, a.Decision__c);
             System.assert(a.Quantity_MW__c > 0);
         }

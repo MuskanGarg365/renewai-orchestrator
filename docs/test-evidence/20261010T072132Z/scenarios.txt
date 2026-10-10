@@ -1,0 +1,17 @@
+Querying Data... done
+┌──────────────────────────────────────────┬──────────────────┬───────────┬──────────────────────┐
+│ NAME                                     │ SCENARIO_TYPE__C │ STATUS__C │ CORRELATION_ID__C    │
+├──────────────────────────────────────────┼──────────────────┼───────────┼──────────────────────┤
+│ Simulation: Cloud Front 2026-10-09 06:30 │ Cloud Front      │ Cancelled │ RENEWAI-17698CC8A1B3 │
+│ Simulation: Cloud Front 2026-10-09 06:30 │ Cloud Front      │ Completed │ RENEWAI-3883914C7037 │
+│ Battery Outage 2026-10-09 06:30          │ Battery Outage   │ Completed │ RENEWAI-FC21A1F978EC │
+│ Demand Surge 2026-10-09 06:30            │ Demand Surge     │ Completed │ RENEWAI-195D7528A611 │
+│ Price Spike 2026-10-09 06:30             │ Price Spike      │ Completed │ RENEWAI-2DDC20F8DE4D │
+│ Cloud Front 2026-10-09 06:30             │ Cloud Front      │ Completed │ RENEWAI-6FAE3819A329 │
+│ Simulation: Price Spike 2026-10-09 06:30 │ Price Spike      │ Completed │ RENEWAI-1E6746B4DD4E │
+│ Price Spike 2026-10-09 06:30             │ Price Spike      │ Completed │ RENEWAI-11F2C43716FC │
+│ Cloud Front 2026-10-09 06:30             │ Cloud Front      │ Completed │ RENEWAI-21B29A8648E5 │
+│ Battery Outage 2026-10-09 06:30          │ Battery Outage   │ Completed │ RENEWAI-11B94F69BF2C │
+└──────────────────────────────────────────┴──────────────────┴───────────┴──────────────────────┘
+
+[1mTotal number of records retrieved: 10.[22m

@@ -1,0 +1,27 @@
+Querying Data... done
+┌────────┬───────────────────┬────────────────────┬──────────────────┬────────────────────┬───────────────┬──────────────────────┐
+│ NAME   │ OBJECTIVE_MODE__C │ APPROVAL_STATUS__C │ APPROVAL_NOTE__C │ DECIDED_BY__R.NAME │ DECIDED_ON__C │ CORRELATION_ID__C    │
+├────────┼───────────────────┼────────────────────┼──────────────────┼────────────────────┼───────────────┼──────────────────────┤
+│ D-0055 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0051 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0057 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0053 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0056 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0058 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0054 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0052 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-17698CC8A1B3 │
+│ D-0049 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0044 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0046 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0045 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0048 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0050 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0047 │ Balanced          │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0043 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-3883914C7037 │
+│ D-0041 │ Cost First        │ Pending            │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-FC21A1F978EC │
+│ D-0042 │ Cost First        │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-FC21A1F978EC │
+│ D-0039 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-195D7528A611 │
+│ D-0040 │ Balanced          │ Not Required       │ [1mnull[22m             │                    │ [1mnull[22m          │ RENEWAI-195D7528A611 │
+└────────┴───────────────────┴────────────────────┴──────────────────┴────────────────────┴───────────────┴──────────────────────┘
+
+[1mTotal number of records retrieved: 20.[22m

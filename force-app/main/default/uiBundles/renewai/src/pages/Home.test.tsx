@@ -6,15 +6,27 @@ import portfolioFixture from '@/api/fixtures/portfolio.json';
 import { RenewAIApiError } from '@/api/renewaiClient';
 
 const getPortfolio = vi.fn();
+const getAudit = vi.fn();
 
 vi.mock('@/api/renewaiClient', async importOriginal => {
   const actual = await importOriginal<typeof import('@/api/renewaiClient')>();
-  return { ...actual, getPortfolio: (...args: unknown[]) => getPortfolio(...args) };
+  return {
+    ...actual,
+    getPortfolio: (...args: unknown[]) => getPortfolio(...args),
+    getAudit: (...args: unknown[]) => getAudit(...args),
+  };
 });
 
 describe('Home dashboard', () => {
   beforeEach(() => {
     getPortfolio.mockReset();
+    getAudit.mockReset();
+    getAudit.mockResolvedValue({
+      success: true,
+      correlationId: 'RENEWAI-AUDIT',
+      canApprove: false,
+      rows: [],
+    });
   });
 
   it('shows KPIs, batteries and assets from the API', async () => {

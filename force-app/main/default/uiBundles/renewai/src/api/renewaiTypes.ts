@@ -242,3 +242,44 @@ export interface SimulationCancelResponse {
   scenarioId: string;
   status: string;
 }
+
+export type ApprovalOutcome = 'Approved' | 'Rejected';
+export type ApprovalStatus =
+  | 'Not Required'
+  | 'Pending'
+  | 'Approved'
+  | 'Rejected';
+
+export interface ApprovalResponse {
+  success: true;
+  correlationId: string;
+  decisionId: string;
+  approvalStatus: ApprovalOutcome;
+  actionsUpdated: number;
+  decidedBy: string;
+  decidedOn: string;
+}
+
+export interface AuditRow {
+  decisionId: string;
+  name: string;
+  decisionType: string | null;
+  objectiveMode: string | null;
+  approvalStatus: ApprovalStatus;
+  approvalNote: string | null;
+  confidence: number | null;
+  score: number | null;
+  snapshotTime: string | null;
+  correlationId: string | null;
+  decidedBy: string | null;
+  decidedOn: string | null;
+  createdDate: string;
+  actionCount: number;
+}
+
+export interface AuditResponse {
+  success: true;
+  correlationId: string;
+  canApprove: boolean;
+  rows: AuditRow[];
+}

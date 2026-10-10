@@ -17,6 +17,8 @@ global with sharing class RenewAIRestResource {
                 handlePortfolio(request, response, correlationId);
             } else if (resourcePath == 'assets') {
                 handleAssets(response, correlationId);
+            } else if (resourcePath == 'decisions') {
+                handleAudit(request, response, correlationId);
             } else {
                 writeError(response, 404, correlationId, 'RESOURCE_NOT_FOUND',
                     'The requested RenewAI resource was not found.', new List<RenewAIDTO.ErrorDetail>());
@@ -54,6 +56,8 @@ global with sharing class RenewAIRestResource {
                 handleScenario(request, response, correlationId);
             } else if (resourcePath == 'simulation') {
                 handleSimulation(request, response, correlationId);
+            } else if (resourcePath == 'approval') {
+                handleApproval(request, response, correlationId);
             } else if (resourcePath == 'simulationcancel') {
                 handleSimulationCancel(request, response, correlationId);
             } else {
@@ -74,6 +78,15 @@ global with sharing class RenewAIRestResource {
                 'VALIDATION_ERROR',
                 'The request or portfolio data failed validation.',
                 exceptionRecord.validationErrors
+            );
+        } catch (RenewAIAccessException exceptionRecord) {
+            writeError(
+                response,
+                403,
+                correlationId,
+                'APPROVAL_NOT_PERMITTED',
+                exceptionRecord.getMessage(),
+                new List<RenewAIDTO.ErrorDetail>()
             );
         } catch (JSONException exceptionRecord) {
             writeError(
@@ -152,6 +165,45 @@ global with sharing class RenewAIRestResource {
         RenewAIDTO.DecisionResponse result =
             RenewAIDecisionService.run(decisionRequest, correlationId);
 
+        response.statusCode = 200;
+        response.responseBody = Blob.valueOf(JSON.serialize(result));
+    }
+
+    private static void handleApproval(
+        RestRequest request,
+        RestResponse response,
+        String correlationId
+    ) {
+        String body = request.requestBody == null
+            ? ''
+            : request.requestBody.toString();
+
+        RenewAIDTO.ApprovalRequest approvalRequest =
+            String.isBlank(body)
+                ? null
+                : (RenewAIDTO.ApprovalRequest) JSON.deserialize(
+                    body,
+                    RenewAIDTO.ApprovalRequest.class
+                );
+
+        RenewAIDTO.ApprovalResponse result =
+            RenewAIApprovalService.decide(approvalRequest, correlationId);
+
+        response.statusCode = 200;
+        response.responseBody = Blob.valueOf(JSON.serialize(result));
+    }
+
+    private static void handleAudit(
+        RestRequest request,
+        RestResponse response,
+        String correlationId
+    ) {
+        Integer maxRows = parseInteger(request.params.get('limit'), 20);
+        RenewAIDTO.AuditResponse result = RenewAIAuditService.recent(
+            maxRows,
+            request.params.get('status'),
+            correlationId
+        );
         response.statusCode = 200;
         response.responseBody = Blob.valueOf(JSON.serialize(result));
     }
@@ -255,6 +307,8 @@ global with sharing class RenewAIRestResource {
         String normalized = requestUri.toLowerCase();
         if (normalized.endsWith('/portfolio')) return 'portfolio';
         if (normalized.endsWith('/assets')) return 'assets';
+        if (normalized.endsWith('/decision/approval')) return 'approval';
+        if (normalized.endsWith('/decisions')) return 'decisions';
         if (normalized.endsWith('/decision')) return 'decision';
         if (normalized.endsWith('/scenario')) return 'scenario';
         if (normalized.endsWith('/simulation/cancel')) return 'simulationcancel';

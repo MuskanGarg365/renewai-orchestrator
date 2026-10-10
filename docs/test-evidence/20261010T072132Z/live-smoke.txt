@@ -1,0 +1,27 @@
+PASS GET /portfolio succeeded
+PASS success flag
+PASS correlationId present
+FAIL 12 assets (got 11)
+PASS renewableTotalMW 150.56
+PASS energyPriceMWh 3050
+PASS POST /decision (Balanced) succeeded
+PASS Balanced: decision saved (a09NS00000bavthYAA)
+PASS Balanced: RESERVE_DISCHARGE with 4 actions
+PASS POST /decision (Cost First) succeeded
+PASS Cost First: decision saved (a09NS00000bavvJYAQ)
+PASS Cost First: DISCHARGE_AND_SELL with 3 actions
+PASS POST /scenario (Cloud Front) completed
+PASS Cloud Front: before RESERVE_DISCHARGE -> after HOLD_AND_RESERVE
+PASS POST /scenario (Price Spike) completed
+PASS Price Spike: before DISCHARGE_AND_SELL -> after DISCHARGE_AND_SELL
+PASS POST /scenario (Demand Surge) completed
+PASS Demand Surge: before RESERVE_DISCHARGE -> after RESERVE_DISCHARGE
+PASS POST /scenario (Battery Outage) completed
+PASS Battery Outage: before DISCHARGE_AND_SELL -> after RESERVE_DISCHARGE
+PASS POST /simulation completed
+PASS simulation has 8 steps (got 8)
+PASS objective comparison has 4 runs
+PASS repeatable: checksum 1FCCECFB952E === 1FCCECFB952E
+PASS POST /simulation/cancel marks the scenario Cancelled
+PASS misaligned asOf is rejected with INTERVAL_MISALIGNED
+smoke exit code: 1

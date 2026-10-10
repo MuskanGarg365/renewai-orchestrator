@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Read-only access to the RenewAI audit trail (GET /decisions), including who decided and the approval note.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>RenewAI Audit Access</label>
+    <classAccesses>
+        <apexClass>RenewAIAuditService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewAIApprovalService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Decision__c.Approval_Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Decision__c.Decided_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Decision__c.Decided_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

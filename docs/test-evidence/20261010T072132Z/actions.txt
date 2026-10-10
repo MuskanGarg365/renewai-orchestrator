@@ -1,0 +1,37 @@
+Querying Data... done
+┌────────────────┬────────────────┬───────────────────┬──────────────────┐
+│ ACTION_TYPE__C │ QUANTITY_MW__C │ STATUS__C         │ DECISION__R.NAME │
+├────────────────┼────────────────┼───────────────────┼──────────────────┤
+│ Reserve        │ 5.87           │ Awaiting Approval │ D-0056           │
+│ Discharge      │ 16.83          │ Planned           │ D-0058           │
+│ Reserve        │ 5.88           │ Awaiting Approval │ D-0054           │
+│ Reserve        │ 5.88           │ Awaiting Approval │ D-0056           │
+│ Discharge      │ 16.83          │ Planned           │ D-0058           │
+│ Discharge      │ 5.33           │ Planned           │ D-0051           │
+│ Reserve        │ 3.62           │ Planned           │ D-0052           │
+│ Buy            │ 40.38          │ Planned           │ D-0053           │
+│ Buy            │ 67.92          │ Awaiting Approval │ D-0054           │
+│ Buy            │ 70.48          │ Awaiting Approval │ D-0055           │
+│ Buy            │ 73.23          │ Awaiting Approval │ D-0056           │
+│ Buy            │ 52.7           │ Planned           │ D-0057           │
+│ Reserve        │ 3.17           │ Planned           │ D-0058           │
+│ Reserve        │ 3.17           │ Planned           │ D-0058           │
+│ Reserve        │ 3.62           │ Planned           │ D-0051           │
+│ Reserve        │ 3.63           │ Planned           │ D-0052           │
+│ Reserve        │ 4.75           │ Planned           │ D-0053           │
+│ Reserve        │ 4.75           │ Planned           │ D-0053           │
+│ Reserve        │ 3.63           │ Planned           │ D-0051           │
+│ Reserve        │ 5.87           │ Awaiting Approval │ D-0054           │
+│ Reserve        │ 5.88           │ Awaiting Approval │ D-0055           │
+│ Reserve        │ 5.87           │ Awaiting Approval │ D-0055           │
+│ Discharge      │ 5.32           │ Planned           │ D-0051           │
+│ Discharge      │ 6.36           │ Planned           │ D-0052           │
+│ Reserve        │ 4.75           │ Planned           │ D-0057           │
+│ Reserve        │ 4.75           │ Planned           │ D-0057           │
+│ Discharge      │ 6.37           │ Planned           │ D-0052           │
+│ Reserve        │ 3.17           │ Planned           │ D-0050           │
+│ Discharge      │ 16.83          │ Planned           │ D-0050           │
+│ Discharge      │ 6.37           │ Planned           │ D-0044           │
+└────────────────┴────────────────┴───────────────────┴──────────────────┘
+
+[1mTotal number of records retrieved: 30.[22m

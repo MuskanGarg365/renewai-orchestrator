@@ -1,0 +1,50 @@
+{
+  "alias": "LWC",
+  "asOf": "2026-10-09T06:30:00Z",
+  "ranAt": "2026-10-10T07:22:33.292Z",
+  "failures": [
+    "approval refused: assign RenewAI_Approver to this user (or run the check as an approver)"
+  ],
+  "timings": [
+    {
+      "step": "GET /portfolio",
+      "ms": 1414
+    },
+    {
+      "step": "POST /decision",
+      "ms": 1236
+    },
+    {
+      "step": "POST /decision",
+      "ms": 1243
+    },
+    {
+      "step": "POST /decision/approval",
+      "ms": 1235
+    },
+    {
+      "step": "POST /decision/approval",
+      "ms": 1240
+    },
+    {
+      "step": "POST /decision/approval",
+      "ms": 1237
+    },
+    {
+      "step": "GET /decisions",
+      "ms": 1231
+    },
+    {
+      "step": "GET /decisions",
+      "ms": 1234
+    },
+    {
+      "step": "POST /decision",
+      "ms": 1238
+    },
+    {
+      "step": "POST /decision",
+      "ms": 1235
+    }
+  ]
+}
