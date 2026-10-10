@@ -10,24 +10,34 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Planned</fullName>
+                <fullName>Charge</fullName>
                 <default>false</default>
-                <label>Planned</label>
+                <label>Charge</label>
             </value>
             <value>
-                <fullName>Executing</fullName>
+                <fullName>Discharge</fullName>
                 <default>false</default>
-                <label>Executing</label>
+                <label>Discharge</label>
             </value>
             <value>
-                <fullName>Completed</fullName>
+                <fullName>Buy</fullName>
                 <default>false</default>
-                <label>Completed</label>
+                <label>Buy</label>
             </value>
             <value>
-                <fullName>Failed</fullName>
+                <fullName>Sell</fullName>
                 <default>false</default>
-                <label>Failed</label>
+                <label>Sell</label>
+            </value>
+            <value>
+                <fullName>Reserve</fullName>
+                <default>false</default>
+                <label>Reserve</label>
+            </value>
+            <value>
+                <fullName>Curtail</fullName>
+                <default>false</default>
+                <label>Curtail</label>
             </value>
         </valueSetDefinition>
     </valueSet>

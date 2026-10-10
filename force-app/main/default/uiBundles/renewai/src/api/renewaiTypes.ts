@@ -45,3 +45,73 @@ export interface ErrorResponse {
   message: string;
   errors: ApiErrorDetail[];
 }
+/* ---------------- Day 5: decision engine ---------------- */
+
+export type ObjectiveMode =
+  | 'Balanced'
+  | 'Cost First'
+  | 'Clean Energy First'
+  | 'Reliability First';
+
+export const OBJECTIVE_MODES: ObjectiveMode[] = [
+  'Balanced',
+  'Cost First',
+  'Clean Energy First',
+  'Reliability First',
+];
+
+export type ActionType =
+  | 'Charge'
+  | 'Discharge'
+  | 'Buy'
+  | 'Sell'
+  | 'Reserve'
+  | 'Curtail';
+
+export interface ActionLine {
+  actionType: ActionType;
+  assetCode: string;
+  quantityMW: number;
+}
+
+export interface TermScore {
+  term: string;
+  rawValue: number;
+  normalized: number;
+  weight: number;
+  contribution: number;
+}
+
+export interface CandidateResult {
+  candidateId: string;
+  label: string;
+  feasible: boolean;
+  score: number | null;
+  rank: number | null;
+  actions: ActionLine[];
+  rejectionReasons: string[];
+  breakdown: TermScore[];
+}
+
+export interface DecisionInputs {
+  renewableMW: number;
+  demandMW: number;
+  demandGapMW: number;
+  energyPriceMWh: number;
+}
+
+export interface DecisionResponse {
+  success: true;
+  correlationId: string;
+  decisionId: string;
+  asOf: string;
+  objectiveMode: ObjectiveMode;
+  confidence: number;
+  reserveMW: number;
+  approvalStatus: 'Not Required' | 'Pending' | 'Approved';
+  explanation: string;
+  inputs: DecisionInputs;
+  selected: CandidateResult;
+  alternatives: CandidateResult[];
+  rejected: CandidateResult[];
+}

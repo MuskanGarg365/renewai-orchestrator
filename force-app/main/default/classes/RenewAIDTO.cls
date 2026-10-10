@@ -80,4 +80,81 @@ public class RenewAIDTO {
             errors = new List<ErrorDetail>();
         }
     }
+
+    // ---------------- Day 5: decision engine ----------------
+
+    public class DecisionRequest {
+        public Datetime asOf { get; set; }
+        public String objectiveMode { get; set; }
+    }
+
+    public class ActionLine {
+        public String actionType { get; set; }
+        public String assetCode { get; set; }
+        public Decimal quantityMW { get; set; }
+
+        public ActionLine(
+            String actionType,
+            String assetCode,
+            Decimal quantityMW
+        ) {
+            this.actionType = actionType;
+            this.assetCode = assetCode;
+            this.quantityMW = quantityMW;
+        }
+    }
+
+    public class TermScore {
+        public String term { get; set; }
+        public Decimal rawValue { get; set; }
+        public Decimal normalized { get; set; }
+        public Decimal weight { get; set; }
+        public Decimal contribution { get; set; }
+    }
+
+    public class CandidateResult {
+        public String candidateId { get; set; }
+        public String label { get; set; }
+        public Boolean feasible { get; set; }
+        public Decimal score { get; set; }
+        public Integer rank { get; set; }
+        public List<ActionLine> actions { get; set; }
+        public List<String> rejectionReasons { get; set; }
+        public List<TermScore> breakdown { get; set; }
+
+        public CandidateResult() {
+            actions = new List<ActionLine>();
+            rejectionReasons = new List<String>();
+            breakdown = new List<TermScore>();
+        }
+    }
+
+    public class DecisionInputs {
+        public Decimal renewableMW { get; set; }
+        public Decimal demandMW { get; set; }
+        public Decimal demandGapMW { get; set; }
+        public Decimal energyPriceMWh { get; set; }
+    }
+
+    public class DecisionResponse {
+        public Boolean success { get; set; }
+        public String correlationId { get; set; }
+        public Id decisionId { get; set; }
+        public Datetime asOf { get; set; }
+        public String objectiveMode { get; set; }
+        public Decimal confidence { get; set; }
+        public Decimal reserveMW { get; set; }
+        public String approvalStatus { get; set; }
+        public String explanation { get; set; }
+        public DecisionInputs inputs { get; set; }
+        public CandidateResult selected { get; set; }
+        public List<CandidateResult> alternatives { get; set; }
+        public List<CandidateResult> rejected { get; set; }
+
+        public DecisionResponse() {
+            success = true;
+            alternatives = new List<CandidateResult>();
+            rejected = new List<CandidateResult>();
+        }
+    }
 }

@@ -13,7 +13,9 @@ vi.mock('@/api/renewaiClient', async importOriginal => {
 });
 
 describe('Home dashboard', () => {
-  beforeEach(() => getPortfolio.mockReset());
+  beforeEach(() => {
+    getPortfolio.mockReset();
+  });
 
   it('shows KPIs, batteries and assets from the API', async () => {
     getPortfolio.mockResolvedValue(portfolioFixture);
@@ -28,13 +30,13 @@ describe('Home dashboard', () => {
     expect(screen.getByTestId('data-quality')).toHaveTextContent(/data quality ok/i);
   });
 
-  it('shows an unauthorized state and retries', async () => {
+  it('shows a forbidden state and retries', async () => {
     getPortfolio
-      .mockRejectedValueOnce(new RenewAIApiError('Access denied.', 'unauthorized', 403, 'RENEWAI-X'))
+      .mockRejectedValueOnce(new RenewAIApiError('Access denied.', 'forbidden', 403, 'RENEWAI-X'))
       .mockResolvedValueOnce(portfolioFixture);
     render(<Home />);
 
-    expect(await screen.findByTestId('error-view')).toHaveTextContent(/not authorized/i);
+    expect(await screen.findByTestId('error-view')).toHaveTextContent(/cannot read/i);
     expect(screen.getByTestId('error-view')).toHaveTextContent('RENEWAI-X');
 
     await userEvent.click(screen.getByRole('button', { name: /retry/i }));

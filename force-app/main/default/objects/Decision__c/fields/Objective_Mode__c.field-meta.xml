@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Objective_Mode__c</fullName>
+    <label>Objective Mode</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Balanced</fullName>
+                <default>false</default>
+                <label>Balanced</label>
+            </value>
+            <value>
+                <fullName>Cost First</fullName>
+                <default>false</default>
+                <label>Cost First</label>
+            </value>
+            <value>
+                <fullName>Clean Energy First</fullName>
+                <default>false</default>
+                <label>Clean Energy First</label>
+            </value>
+            <value>
+                <fullName>Reliability First</fullName>
+                <default>false</default>
+                <label>Reliability First</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

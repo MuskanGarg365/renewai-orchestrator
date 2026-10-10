@@ -25,6 +25,21 @@ function get(path) {
   }
 }
 
+/** POST helper through the CLI. */
+function post(path, payload) {
+  try {
+    const text = execFileSync(
+      'sf',
+      ['api', 'request', 'rest', `/services/apexrest/renewai/v1${path}`,
+       '--method', 'POST', '--body', JSON.stringify(payload), '-o', alias],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }
+    );
+    return { ok: true, text };
+  } catch (e) {
+    return { ok: false, text: `${e.stdout ?? ''}${e.stderr ?? ''}` };
+  }
+}
+
 const failures = [];
 const check = (ok, msg) =>
   ok ? console.log('PASS', msg) : (failures.push(msg), console.error('FAIL', msg));
@@ -46,6 +61,16 @@ check(typeof p.correlationId === 'string', 'correlationId present');
 check(p.assets?.length === 12, `12 assets (got ${p.assets?.length})`);
 check(p.metrics?.renewableTotalMW > 0, `renewableTotalMW ${p.metrics?.renewableTotalMW}`);
 check(p.metrics?.energyPriceMWh != null, `energyPriceMWh ${p.metrics?.energyPriceMWh}`);
+
+// Day 5: decision engine
+for (const mode of ['Balanced', 'Cost First']) {
+  const d = post('/decision', { asOf, objectiveMode: mode });
+  let body = {};
+  try { body = JSON.parse(d.text); } catch { console.error('  Not JSON:', d.text.slice(0, 300)); }
+  check(body.success === true, `POST /decision (${mode}) succeeded`);
+  check(typeof body.decisionId === 'string', `${mode}: decision saved (${body.decisionId})`);
+  check(body.selected?.actions?.length > 0, `${mode}: ${body.selected?.candidateId} with ${body.selected?.actions?.length} actions`);
+}
 
 // Negative test: a timestamp not on a 15-minute boundary must be rejected.
 const bad = get('/portfolio?asOf=2026-10-09T06:31:00Z');
