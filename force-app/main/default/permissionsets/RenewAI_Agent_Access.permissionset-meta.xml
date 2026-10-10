@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lets the RenewAI Orchestrator agent call the RenewAI Apex actions. Assign together with RenewAI_Operator, RenewAI_Decision_Access and RenewAI_Scenario_Access.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>RenewAI Agent Access</label>
+    <classAccesses>
+        <apexClass>RenewAIAgentSupport</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewAIAgentGetPortfolioState</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewAIAgentRunDecision</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewAIAgentRunScenario</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewAIAgentGetExplanation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

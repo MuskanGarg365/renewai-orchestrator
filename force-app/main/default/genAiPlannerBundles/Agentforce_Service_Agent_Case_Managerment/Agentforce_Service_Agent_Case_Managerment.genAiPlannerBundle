@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with case status only.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jNS000003k8FN</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>Case_Status_Management_16jNS000003k8FN</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Case_Status_Management_16jNS000003k8FN</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Once the case number is provided by User, return the current status of the case.</description>
+        <developerName>Case_Status_Management_16jNS000003k8FN</developerName>
+        <genAiPluginInstructions>
+            <description>Do not provide case info without getting case number</description>
+            <developerName>instruction_0_1782105756170</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>instruction_0_1782105756170</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Case_Status_179NS0000059FWP</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Case_Status_179NS0000059FWP</fullName>
+            <description>Provide the current status for the case number given by users.</description>
+            <developerName>Get_Case_Status_179NS0000059FWP</developerName>
+            <invocationTarget>Get_Case_Status</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Case_Status</localDeveloperName>
+            <masterLabel>Get Case Status</masterLabel>
+            <source>Get_Case_Status</source>
+        </localActions>
+        <localDeveloperName>Case_Status_Management</localDeveloperName>
+        <masterLabel>Case Status Management</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Job is to provide only the status of the case.</scope>
+        <source>Case_Status_Management</source>
+    </localTopics>
+    <masterLabel>Agentforce Service Agent Case Managerment</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jNS000003k8FN</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jNS000003k8FN</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+    <ruleExpressions>
+        <conditions>
+            <leftOperand>isVerified</leftOperand>
+            <leftOperandType>Variable</leftOperandType>
+            <operator>equal</operator>
+            <rightOperandValue>true</rightOperandValue>
+        </conditions>
+        <expression>Verified_User</expression>
+        <expressionLabel>Verified User</expressionLabel>
+        <expressionName>Verified_User</expressionName>
+        <expressionType>sel</expressionType>
+    </ruleExpressions>
+</GenAiPlannerBundle>

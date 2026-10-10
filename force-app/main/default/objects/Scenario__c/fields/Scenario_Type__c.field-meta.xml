@@ -34,6 +34,16 @@
                 <default>false</default>
                 <label>Battery Optimization</label>
             </value>
+            <value>
+                <fullName>Cloud Front</fullName>
+                <default>false</default>
+                <label>Cloud Front</label>
+            </value>
+            <value>
+                <fullName>Battery Outage</fullName>
+                <default>false</default>
+                <label>Battery Outage</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

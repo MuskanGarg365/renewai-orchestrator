@@ -1,0 +1,3636 @@
+{
+  "Cloud Front": {
+    "success": true,
+    "correlationId": "RENEWAI-FIXSCN01",
+    "scenarioId": "a01000000000S01AAA",
+    "scenarioType": "Cloud Front",
+    "description": "A cloud front cuts solar output by 40% and lowers forecast confidence by 0.30.",
+    "objectiveMode": "Balanced",
+    "asOf": "2026-10-09T06:30:00.000Z",
+    "status": "Completed",
+    "parameters": [
+      {
+        "name": "Solar output (MW)",
+        "before": "126.90",
+        "after": "76.14"
+      },
+      {
+        "name": "Renewable total (MW)",
+        "before": "160.24",
+        "after": "109.48"
+      },
+      {
+        "name": "Forecast confidence",
+        "before": "0.85",
+        "after": "0.55"
+      }
+    ],
+    "baseline": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN01",
+      "decisionId": "a00000000000B01AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Balanced",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Not Required",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 3050.00 per MWh. Under the Balanced objective the engine selected \"Cover the gap and hold a discharge reserve\" (score 0.1524): Discharge 0.97 MW; Reserve 7.25 MW. Runner-up: \"Balance with the grid and hold a discharge reserve\" (score 0.1685). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW.",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "RESERVE_DISCHARGE",
+        "label": "Cover the gap and hold a discharge reserve",
+        "feasible": true,
+        "score": 0.1524,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 0.48
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 0.49
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 3.62
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 3.63
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.25,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 0.24,
+            "normalized": 0.0242,
+            "weight": 0.1,
+            "contribution": 0.0024
+          },
+          {
+            "term": "reliability",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0
+          },
+          {
+            "term": "profit",
+            "rawValue": 0.0,
+            "normalized": 1.0,
+            "weight": 0.15,
+            "contribution": 0.15
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.1685,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.25,
+              "contribution": 0.0116
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.15,
+              "contribution": 0.0069
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.2124,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.1,
+              "contribution": 0.0024
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.2285,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.25,
+              "contribution": 0.0116
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.15,
+              "contribution": 0.0069
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_AND_SELL",
+          "label": "Discharge at full rating and sell to the grid",
+          "feasible": true,
+          "score": 0.3,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Sell",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 39.03
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 10.0,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "reliability",
+              "rawValue": 1.0,
+              "normalized": 1.0,
+              "weight": 0.2,
+              "contribution": 0.2
+            },
+            {
+              "term": "profit",
+              "rawValue": -28272.36,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.66,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 16789.11,
+              "normalized": 1.0,
+              "weight": 0.25,
+              "contribution": 0.25
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.1,
+              "contribution": 0.05
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "disturbed": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN01",
+      "decisionId": "a00000000000E01AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Balanced",
+      "confidence": 0.55,
+      "reserveMW": 11.75,
+      "approvalStatus": "Pending",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 109.48 MW against demand of 161.21 MW (gap 51.73 MW) at a price of 3050.00 per MWh. Under the Balanced objective the engine selected \"Balance with the grid and hold a discharge reserve\" (score 0.2667): Reserve 11.75 MW; Buy 51.73 MW. Runner-up: \"Discharge at full rating and sell to the grid\" (score 0.3000). 1 candidate(s) were rejected by hard constraints. Forecast confidence is 55.00% and the reserve target is 11.75 MW. Operator approval is required before execution (low confidence or high reliability risk).",
+      "inputs": {
+        "renewableMW": 109.48,
+        "demandMW": 161.21,
+        "demandGapMW": 51.73,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "HOLD_AND_RESERVE",
+        "label": "Balance with the grid and hold a discharge reserve",
+        "feasible": true,
+        "score": 0.2667,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 5.88
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 5.87
+          },
+          {
+            "actionType": "Buy",
+            "assetCode": "GRID_INDIA_01",
+            "quantityMW": 51.73
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": 41416.33,
+            "normalized": 0.6667,
+            "weight": 0.25,
+            "contribution": 0.1667
+          },
+          {
+            "term": "carbon",
+            "rawValue": 10.6,
+            "normalized": 0.6667,
+            "weight": 0.15,
+            "contribution": 0.1
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.1,
+            "contribution": 0.0
+          },
+          {
+            "term": "reliability",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0
+          },
+          {
+            "term": "profit",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.15,
+            "contribution": 0.0
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "DISCHARGE_AND_SELL",
+          "label": "Discharge at full rating and sell to the grid",
+          "feasible": true,
+          "score": 0.3,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 11.73
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 9391.33,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": 2.4,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 10.0,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "reliability",
+              "rawValue": 1.0,
+              "normalized": 1.0,
+              "weight": 0.2,
+              "contribution": 0.2
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.3267,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 51.73
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 41416.33,
+              "normalized": 0.6667,
+              "weight": 0.25,
+              "contribution": 0.1667
+            },
+            {
+              "term": "carbon",
+              "rawValue": 10.6,
+              "normalized": 0.6667,
+              "weight": 0.15,
+              "contribution": 0.1
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.51,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 71.73
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 57428.83,
+              "normalized": 1.0,
+              "weight": 0.25,
+              "contribution": 0.25
+            },
+            {
+              "term": "carbon",
+              "rawValue": 14.7,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.1,
+              "contribution": 0.05
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": false,
+          "score": null,
+          "rank": null,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 25.87
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 25.86
+            }
+          ],
+          "rejectionReasons": [
+            "BATTERY_RATE_LIMIT"
+          ],
+          "breakdown": []
+        }
+      ]
+    },
+    "comparison": {
+      "decisionChanged": true,
+      "baselineLabel": "Cover the gap and hold a discharge reserve",
+      "disturbedLabel": "Balance with the grid and hold a discharge reserve",
+      "deltas": [
+        {
+          "metric": "renewableMW",
+          "label": "Renewable output",
+          "unit": "MW",
+          "baseline": 160.24,
+          "disturbed": 109.48,
+          "change": -50.76
+        },
+        {
+          "metric": "demandMW",
+          "label": "Demand",
+          "unit": "MW",
+          "baseline": 161.21,
+          "disturbed": 161.21,
+          "change": 0.0
+        },
+        {
+          "metric": "priceMWh",
+          "label": "Energy price",
+          "unit": "INR/MWh",
+          "baseline": 3050,
+          "disturbed": 3050,
+          "change": 0
+        },
+        {
+          "metric": "confidencePct",
+          "label": "Forecast confidence",
+          "unit": "%",
+          "baseline": 85.0,
+          "disturbed": 55.0,
+          "change": -30.0
+        },
+        {
+          "metric": "reserveMW",
+          "label": "Reserve target",
+          "unit": "MW",
+          "baseline": 7.25,
+          "disturbed": 11.75,
+          "change": 4.5
+        },
+        {
+          "metric": "dischargeMW",
+          "label": "Battery discharge",
+          "unit": "MW",
+          "baseline": 0.97,
+          "disturbed": 0,
+          "change": -0.97
+        },
+        {
+          "metric": "chargeMW",
+          "label": "Battery charge",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "buyMW",
+          "label": "Grid purchase",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 51.73,
+          "change": 51.73
+        },
+        {
+          "metric": "sellMW",
+          "label": "Grid sale",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "netValueINR",
+          "label": "Net trading value",
+          "unit": "INR",
+          "baseline": 0.0,
+          "disturbed": -41416.33,
+          "change": -41416.33
+        }
+      ]
+    }
+  },
+  "Price Spike": {
+    "success": true,
+    "correlationId": "RENEWAI-FIXSCN02",
+    "scenarioId": "a01000000000S02AAA",
+    "scenarioType": "Price Spike",
+    "description": "The energy price rises by 80%.",
+    "objectiveMode": "Cost First",
+    "asOf": "2026-10-09T06:30:00.000Z",
+    "status": "Completed",
+    "parameters": [
+      {
+        "name": "Energy price (INR/MWh)",
+        "before": "3050.00",
+        "after": "5490.00"
+      }
+    ],
+    "baseline": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN02",
+      "decisionId": "a00000000000B02AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Cost First",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Pending",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 3050.00 per MWh. Under the Cost First objective the engine selected \"Discharge at full rating and sell to the grid\" (score 0.1500): Discharge 40.00 MW; Sell 39.03 MW. Runner-up: \"Cover the gap and hold a discharge reserve\" (score 0.3512). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW. Operator approval is required before execution (low confidence or high reliability risk).",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "DISCHARGE_AND_SELL",
+        "label": "Discharge at full rating and sell to the grid",
+        "feasible": true,
+        "score": 0.15,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Sell",
+            "assetCode": "GRID_INDIA_01",
+            "quantityMW": 39.03
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.4,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 10.0,
+            "normalized": 1.0,
+            "weight": 0.05,
+            "contribution": 0.05
+          },
+          {
+            "term": "reliability",
+            "rawValue": 1.0,
+            "normalized": 1.0,
+            "weight": 0.1,
+            "contribution": 0.1
+          },
+          {
+            "term": "profit",
+            "rawValue": -28272.36,
+            "normalized": 0.0,
+            "weight": 0.35,
+            "contribution": 0.0
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "RESERVE_DISCHARGE",
+          "label": "Cover the gap and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3512,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3708,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.3812,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.4008,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.855,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 16789.11,
+              "normalized": 1.0,
+              "weight": 0.4,
+              "contribution": 0.4
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.05,
+              "contribution": 0.05
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.05,
+              "contribution": 0.025
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "disturbed": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN02",
+      "decisionId": "a00000000000E02AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Cost First",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Pending",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 5490.00 per MWh. Under the Cost First objective the engine selected \"Discharge at full rating and sell to the grid\" (score 0.1500): Discharge 40.00 MW; Sell 39.03 MW. Runner-up: \"Cover the gap and hold a discharge reserve\" (score 0.3512). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW. Operator approval is required before execution (low confidence or high reliability risk).",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 5490.0
+      },
+      "selected": {
+        "candidateId": "DISCHARGE_AND_SELL",
+        "label": "Discharge at full rating and sell to the grid",
+        "feasible": true,
+        "score": 0.15,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Sell",
+            "assetCode": "GRID_INDIA_01",
+            "quantityMW": 39.03
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.4,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 10.0,
+            "normalized": 1.0,
+            "weight": 0.05,
+            "contribution": 0.05
+          },
+          {
+            "term": "reliability",
+            "rawValue": 1.0,
+            "normalized": 1.0,
+            "weight": 0.1,
+            "contribution": 0.1
+          },
+          {
+            "term": "profit",
+            "rawValue": -50890.24,
+            "normalized": 0.0,
+            "weight": 0.35,
+            "contribution": 0.0
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "RESERVE_DISCHARGE",
+          "label": "Cover the gap and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3512,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3708,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 1397.89,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.3812,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.4008,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 1397.89,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.855,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 30220.39,
+              "normalized": 1.0,
+              "weight": 0.4,
+              "contribution": 0.4
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.05,
+              "contribution": 0.05
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.05,
+              "contribution": 0.025
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "comparison": {
+      "decisionChanged": false,
+      "baselineLabel": "Discharge at full rating and sell to the grid",
+      "disturbedLabel": "Discharge at full rating and sell to the grid",
+      "deltas": [
+        {
+          "metric": "renewableMW",
+          "label": "Renewable output",
+          "unit": "MW",
+          "baseline": 160.24,
+          "disturbed": 160.24,
+          "change": 0.0
+        },
+        {
+          "metric": "demandMW",
+          "label": "Demand",
+          "unit": "MW",
+          "baseline": 161.21,
+          "disturbed": 161.21,
+          "change": 0.0
+        },
+        {
+          "metric": "priceMWh",
+          "label": "Energy price",
+          "unit": "INR/MWh",
+          "baseline": 3050,
+          "disturbed": 5490.0,
+          "change": 2440.0
+        },
+        {
+          "metric": "confidencePct",
+          "label": "Forecast confidence",
+          "unit": "%",
+          "baseline": 85.0,
+          "disturbed": 85.0,
+          "change": 0.0
+        },
+        {
+          "metric": "reserveMW",
+          "label": "Reserve target",
+          "unit": "MW",
+          "baseline": 7.25,
+          "disturbed": 7.25,
+          "change": 0.0
+        },
+        {
+          "metric": "dischargeMW",
+          "label": "Battery discharge",
+          "unit": "MW",
+          "baseline": 40.0,
+          "disturbed": 40.0,
+          "change": 0.0
+        },
+        {
+          "metric": "chargeMW",
+          "label": "Battery charge",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "buyMW",
+          "label": "Grid purchase",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "sellMW",
+          "label": "Grid sale",
+          "unit": "MW",
+          "baseline": 39.03,
+          "disturbed": 39.03,
+          "change": 0.0
+        },
+        {
+          "metric": "netValueINR",
+          "label": "Net trading value",
+          "unit": "INR",
+          "baseline": 28272.36,
+          "disturbed": 50890.24,
+          "change": 22617.88
+        }
+      ]
+    }
+  },
+  "Demand Surge": {
+    "success": true,
+    "correlationId": "RENEWAI-FIXSCN03",
+    "scenarioId": "a01000000000S03AAA",
+    "scenarioType": "Demand Surge",
+    "description": "Industrial demand rises 15% above forecast.",
+    "objectiveMode": "Balanced",
+    "asOf": "2026-10-09T06:30:00.000Z",
+    "status": "Completed",
+    "parameters": [
+      {
+        "name": "Demand (MW)",
+        "before": "161.21",
+        "after": "185.39"
+      }
+    ],
+    "baseline": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN03",
+      "decisionId": "a00000000000B03AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Balanced",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Not Required",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 3050.00 per MWh. Under the Balanced objective the engine selected \"Cover the gap and hold a discharge reserve\" (score 0.1524): Discharge 0.97 MW; Reserve 7.25 MW. Runner-up: \"Balance with the grid and hold a discharge reserve\" (score 0.1685). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW.",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "RESERVE_DISCHARGE",
+        "label": "Cover the gap and hold a discharge reserve",
+        "feasible": true,
+        "score": 0.1524,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 0.48
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 0.49
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 3.62
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 3.63
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.25,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 0.24,
+            "normalized": 0.0242,
+            "weight": 0.1,
+            "contribution": 0.0024
+          },
+          {
+            "term": "reliability",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0
+          },
+          {
+            "term": "profit",
+            "rawValue": 0.0,
+            "normalized": 1.0,
+            "weight": 0.15,
+            "contribution": 0.15
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.1685,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.25,
+              "contribution": 0.0116
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.15,
+              "contribution": 0.0069
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.2124,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.1,
+              "contribution": 0.0024
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.2285,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.25,
+              "contribution": 0.0116
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.15,
+              "contribution": 0.0069
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_AND_SELL",
+          "label": "Discharge at full rating and sell to the grid",
+          "feasible": true,
+          "score": 0.3,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Sell",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 39.03
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 10.0,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "reliability",
+              "rawValue": 1.0,
+              "normalized": 1.0,
+              "weight": 0.2,
+              "contribution": 0.2
+            },
+            {
+              "term": "profit",
+              "rawValue": -28272.36,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.66,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 16789.11,
+              "normalized": 1.0,
+              "weight": 0.25,
+              "contribution": 0.25
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.1,
+              "contribution": 0.05
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "disturbed": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN03",
+      "decisionId": "a00000000000E03AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Balanced",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Not Required",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 185.39 MW (gap 25.15 MW) at a price of 3050.00 per MWh. Under the Balanced objective the engine selected \"Cover the gap and hold a discharge reserve\" (score 0.2129): Discharge 25.15 MW; Reserve 7.25 MW. Runner-up: \"Discharge batteries to cover the demand gap\" (score 0.2729). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW.",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 185.39,
+        "demandGapMW": 25.15,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "RESERVE_DISCHARGE",
+        "label": "Cover the gap and hold a discharge reserve",
+        "feasible": true,
+        "score": 0.2129,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 12.58
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 12.57
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 3.62
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 3.63
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.25,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.15,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 6.29,
+            "normalized": 0.6288,
+            "weight": 0.1,
+            "contribution": 0.0629
+          },
+          {
+            "term": "reliability",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0
+          },
+          {
+            "term": "profit",
+            "rawValue": 0.0,
+            "normalized": 1.0,
+            "weight": 0.15,
+            "contribution": 0.15
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.2729,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 12.58
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 12.57
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 6.29,
+              "normalized": 0.6288,
+              "weight": 0.1,
+              "contribution": 0.0629
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_AND_SELL",
+          "label": "Discharge at full rating and sell to the grid",
+          "feasible": true,
+          "score": 0.3,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Sell",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 14.85
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.25,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 10.0,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "reliability",
+              "rawValue": 1.0,
+              "normalized": 1.0,
+              "weight": 0.2,
+              "contribution": 0.2
+            },
+            {
+              "term": "profit",
+              "rawValue": -10755.88,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3728,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 25.15
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 20136.92,
+              "normalized": 0.557,
+              "weight": 0.25,
+              "contribution": 0.1393
+            },
+            {
+              "term": "carbon",
+              "rawValue": 5.16,
+              "normalized": 0.557,
+              "weight": 0.15,
+              "contribution": 0.0836
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.4328,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 25.15
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 20136.92,
+              "normalized": 0.557,
+              "weight": 0.25,
+              "contribution": 0.1393
+            },
+            {
+              "term": "carbon",
+              "rawValue": 5.16,
+              "normalized": 0.557,
+              "weight": 0.15,
+              "contribution": 0.0836
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.66,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 45.15
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 36149.42,
+              "normalized": 1.0,
+              "weight": 0.25,
+              "contribution": 0.25
+            },
+            {
+              "term": "carbon",
+              "rawValue": 9.26,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.15,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.1,
+              "contribution": 0.05
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.2,
+              "contribution": 0.06
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.15,
+              "contribution": 0.15
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "comparison": {
+      "decisionChanged": false,
+      "baselineLabel": "Cover the gap and hold a discharge reserve",
+      "disturbedLabel": "Cover the gap and hold a discharge reserve",
+      "deltas": [
+        {
+          "metric": "renewableMW",
+          "label": "Renewable output",
+          "unit": "MW",
+          "baseline": 160.24,
+          "disturbed": 160.24,
+          "change": 0.0
+        },
+        {
+          "metric": "demandMW",
+          "label": "Demand",
+          "unit": "MW",
+          "baseline": 161.21,
+          "disturbed": 185.39,
+          "change": 24.18
+        },
+        {
+          "metric": "priceMWh",
+          "label": "Energy price",
+          "unit": "INR/MWh",
+          "baseline": 3050,
+          "disturbed": 3050,
+          "change": 0
+        },
+        {
+          "metric": "confidencePct",
+          "label": "Forecast confidence",
+          "unit": "%",
+          "baseline": 85.0,
+          "disturbed": 85.0,
+          "change": 0.0
+        },
+        {
+          "metric": "reserveMW",
+          "label": "Reserve target",
+          "unit": "MW",
+          "baseline": 7.25,
+          "disturbed": 7.25,
+          "change": 0.0
+        },
+        {
+          "metric": "dischargeMW",
+          "label": "Battery discharge",
+          "unit": "MW",
+          "baseline": 0.97,
+          "disturbed": 25.15,
+          "change": 24.18
+        },
+        {
+          "metric": "chargeMW",
+          "label": "Battery charge",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "buyMW",
+          "label": "Grid purchase",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "sellMW",
+          "label": "Grid sale",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "netValueINR",
+          "label": "Net trading value",
+          "unit": "INR",
+          "baseline": 0.0,
+          "disturbed": 0.0,
+          "change": 0.0
+        }
+      ]
+    }
+  },
+  "Battery Outage": {
+    "success": true,
+    "correlationId": "RENEWAI-FIXSCN04",
+    "scenarioId": "a01000000000S04AAA",
+    "scenarioType": "Battery Outage",
+    "description": "The first available battery unit trips offline.",
+    "objectiveMode": "Cost First",
+    "asOf": "2026-10-09T06:30:00.000Z",
+    "status": "Completed",
+    "parameters": [
+      {
+        "name": "BATTERY_MH_01 availability",
+        "before": "Available",
+        "after": "Offline"
+      }
+    ],
+    "baseline": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN04",
+      "decisionId": "a00000000000B04AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Cost First",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Pending",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 3050.00 per MWh. Under the Cost First objective the engine selected \"Discharge at full rating and sell to the grid\" (score 0.1500): Discharge 40.00 MW; Sell 39.03 MW. Runner-up: \"Cover the gap and hold a discharge reserve\" (score 0.3512). 0 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW. Operator approval is required before execution (low confidence or high reliability risk).",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "DISCHARGE_AND_SELL",
+        "label": "Discharge at full rating and sell to the grid",
+        "feasible": true,
+        "score": 0.15,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_01",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 20.0
+          },
+          {
+            "actionType": "Sell",
+            "assetCode": "GRID_INDIA_01",
+            "quantityMW": 39.03
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.4,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 10.0,
+            "normalized": 1.0,
+            "weight": 0.05,
+            "contribution": 0.05
+          },
+          {
+            "term": "reliability",
+            "rawValue": 1.0,
+            "normalized": 1.0,
+            "weight": 0.1,
+            "contribution": 0.1
+          },
+          {
+            "term": "profit",
+            "rawValue": -28272.36,
+            "normalized": 0.0,
+            "weight": 0.35,
+            "contribution": 0.0
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "RESERVE_DISCHARGE",
+          "label": "Cover the gap and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3512,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.3708,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 3.62
+            },
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 3.63
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.3812,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 0.48
+            },
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.49
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0242,
+              "weight": 0.05,
+              "contribution": 0.0012
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.4008,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.855,
+          "rank": 6,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_01",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 10.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 16789.11,
+              "normalized": 1.0,
+              "weight": 0.4,
+              "contribution": 0.4
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.05,
+              "contribution": 0.05
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 0.5,
+              "weight": 0.05,
+              "contribution": 0.025
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 0.3,
+              "weight": 0.1,
+              "contribution": 0.03
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 1.0,
+              "weight": 0.35,
+              "contribution": 0.35
+            }
+          ]
+        }
+      ],
+      "rejected": []
+    },
+    "disturbed": {
+      "success": true,
+      "correlationId": "RENEWAI-FIXSCN04",
+      "decisionId": "a00000000000E04AAA",
+      "asOf": "2026-10-09T06:30:00.000Z",
+      "objectiveMode": "Cost First",
+      "confidence": 0.85,
+      "reserveMW": 7.25,
+      "approvalStatus": "Not Required",
+      "explanation": "At 2026-10-09 06:30 UTC, renewables produce 160.24 MW against demand of 161.21 MW (gap 0.97 MW) at a price of 3050.00 per MWh. Under the Cost First objective the engine selected \"Cover the gap and hold a discharge reserve\" (score 0.0024): Discharge 0.97 MW; Reserve 7.25 MW. Runner-up: \"Balance with the grid and hold a discharge reserve\" (score 0.0208). 1 candidate(s) were rejected by hard constraints. Forecast confidence is 85.00% and the reserve target is 7.25 MW.",
+      "inputs": {
+        "renewableMW": 160.24,
+        "demandMW": 161.21,
+        "demandGapMW": 0.97,
+        "energyPriceMWh": 3050
+      },
+      "selected": {
+        "candidateId": "RESERVE_DISCHARGE",
+        "label": "Cover the gap and hold a discharge reserve",
+        "feasible": true,
+        "score": 0.0024,
+        "rank": 1,
+        "actions": [
+          {
+            "actionType": "Discharge",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 0.97
+          },
+          {
+            "actionType": "Reserve",
+            "assetCode": "BATTERY_MH_02",
+            "quantityMW": 7.25
+          }
+        ],
+        "rejectionReasons": [],
+        "breakdown": [
+          {
+            "term": "cost",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.4,
+            "contribution": 0.0
+          },
+          {
+            "term": "carbon",
+            "rawValue": -0.0,
+            "normalized": 0.0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "curtailment",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.05,
+            "contribution": 0.0
+          },
+          {
+            "term": "degradation",
+            "rawValue": 0.24,
+            "normalized": 0.0485,
+            "weight": 0.05,
+            "contribution": 0.0024
+          },
+          {
+            "term": "reliability",
+            "rawValue": 0.0,
+            "normalized": 0.0,
+            "weight": 0.1,
+            "contribution": 0.0
+          },
+          {
+            "term": "profit",
+            "rawValue": 0.0,
+            "normalized": 0,
+            "weight": 0.35,
+            "contribution": 0.0
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "candidateId": "HOLD_AND_RESERVE",
+          "label": "Balance with the grid and hold a discharge reserve",
+          "feasible": true,
+          "score": 0.0208,
+          "rank": 2,
+          "actions": [
+            {
+              "actionType": "Reserve",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 7.25
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "contribution": 0.0
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.35,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "DISCHARGE_TO_GAP",
+          "label": "Discharge batteries to cover the demand gap",
+          "feasible": true,
+          "score": 0.1024,
+          "rank": 3,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.4,
+              "contribution": 0.0
+            },
+            {
+              "term": "carbon",
+              "rawValue": -0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.24,
+              "normalized": 0.0485,
+              "weight": 0.05,
+              "contribution": 0.0024
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.35,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "GRID_BALANCE",
+          "label": "Balance with the grid; keep batteries idle",
+          "feasible": true,
+          "score": 0.1208,
+          "rank": 4,
+          "actions": [
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 0.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 776.61,
+              "normalized": 0.0463,
+              "weight": 0.4,
+              "contribution": 0.0185
+            },
+            {
+              "term": "carbon",
+              "rawValue": 0.2,
+              "normalized": 0.0463,
+              "weight": 0.05,
+              "contribution": 0.0023
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 0.0,
+              "normalized": 0.0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.35,
+              "contribution": 0.0
+            }
+          ]
+        },
+        {
+          "candidateId": "CHARGE_FROM_GRID",
+          "label": "Charge batteries from the grid",
+          "feasible": true,
+          "score": 0.6,
+          "rank": 5,
+          "actions": [
+            {
+              "actionType": "Charge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 20.0
+            },
+            {
+              "actionType": "Buy",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 20.97
+            }
+          ],
+          "rejectionReasons": [],
+          "breakdown": [
+            {
+              "term": "cost",
+              "rawValue": 16789.11,
+              "normalized": 1.0,
+              "weight": 0.4,
+              "contribution": 0.4
+            },
+            {
+              "term": "carbon",
+              "rawValue": 4.3,
+              "normalized": 1.0,
+              "weight": 0.05,
+              "contribution": 0.05
+            },
+            {
+              "term": "curtailment",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.05,
+              "contribution": 0.0
+            },
+            {
+              "term": "degradation",
+              "rawValue": 5.0,
+              "normalized": 1.0,
+              "weight": 0.05,
+              "contribution": 0.05
+            },
+            {
+              "term": "reliability",
+              "rawValue": 0.3,
+              "normalized": 1.0,
+              "weight": 0.1,
+              "contribution": 0.1
+            },
+            {
+              "term": "profit",
+              "rawValue": 0.0,
+              "normalized": 0,
+              "weight": 0.35,
+              "contribution": 0.0
+            }
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "candidateId": "DISCHARGE_AND_SELL",
+          "label": "Discharge at full rating and sell to the grid",
+          "feasible": false,
+          "score": null,
+          "rank": null,
+          "actions": [
+            {
+              "actionType": "Discharge",
+              "assetCode": "BATTERY_MH_02",
+              "quantityMW": 40.0
+            },
+            {
+              "actionType": "Sell",
+              "assetCode": "GRID_INDIA_01",
+              "quantityMW": 39.03
+            }
+          ],
+          "rejectionReasons": [
+            "BATTERY_RATE_LIMIT"
+          ],
+          "breakdown": []
+        }
+      ]
+    },
+    "comparison": {
+      "decisionChanged": true,
+      "baselineLabel": "Discharge at full rating and sell to the grid",
+      "disturbedLabel": "Cover the gap and hold a discharge reserve",
+      "deltas": [
+        {
+          "metric": "renewableMW",
+          "label": "Renewable output",
+          "unit": "MW",
+          "baseline": 160.24,
+          "disturbed": 160.24,
+          "change": 0.0
+        },
+        {
+          "metric": "demandMW",
+          "label": "Demand",
+          "unit": "MW",
+          "baseline": 161.21,
+          "disturbed": 161.21,
+          "change": 0.0
+        },
+        {
+          "metric": "priceMWh",
+          "label": "Energy price",
+          "unit": "INR/MWh",
+          "baseline": 3050,
+          "disturbed": 3050,
+          "change": 0
+        },
+        {
+          "metric": "confidencePct",
+          "label": "Forecast confidence",
+          "unit": "%",
+          "baseline": 85.0,
+          "disturbed": 85.0,
+          "change": 0.0
+        },
+        {
+          "metric": "reserveMW",
+          "label": "Reserve target",
+          "unit": "MW",
+          "baseline": 7.25,
+          "disturbed": 7.25,
+          "change": 0.0
+        },
+        {
+          "metric": "dischargeMW",
+          "label": "Battery discharge",
+          "unit": "MW",
+          "baseline": 40.0,
+          "disturbed": 0.97,
+          "change": -39.03
+        },
+        {
+          "metric": "chargeMW",
+          "label": "Battery charge",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "buyMW",
+          "label": "Grid purchase",
+          "unit": "MW",
+          "baseline": 0,
+          "disturbed": 0,
+          "change": 0
+        },
+        {
+          "metric": "sellMW",
+          "label": "Grid sale",
+          "unit": "MW",
+          "baseline": 39.03,
+          "disturbed": 0,
+          "change": -39.03
+        },
+        {
+          "metric": "netValueINR",
+          "label": "Net trading value",
+          "unit": "INR",
+          "baseline": 28272.36,
+          "disturbed": 0.0,
+          "change": -28272.36
+        }
+      ]
+    }
+  }
+}
