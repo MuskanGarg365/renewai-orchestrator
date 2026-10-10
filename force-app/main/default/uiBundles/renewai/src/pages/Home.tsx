@@ -26,6 +26,7 @@ import { DemoControls } from '@/components/DemoControls';
 import { DecisionPanel } from '@/components/decision/DecisionPanel';
 import { ScenarioPanel } from '@/components/scenario/ScenarioPanel';
 import { SimulationPanel } from '@/components/simulation/SimulationPanel';
+import { AgentChat } from '@/components/agents/AgentChat';
 import {
   EmptyView,
   ErrorView,
@@ -73,6 +74,7 @@ export default function Home() {
           <AssetTable assets={data.assets} />
         </>
       )}
+      <AgentChat />
     </div>
   );
 }
