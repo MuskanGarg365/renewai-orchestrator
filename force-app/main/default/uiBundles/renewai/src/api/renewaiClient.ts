@@ -12,9 +12,12 @@ import type {
   ErrorResponse,
   ObjectiveMode,
   PortfolioResponse,
+  ScenarioResponse,
+  ScenarioType,
 } from './renewaiTypes';
 import portfolioFixture from './fixtures/portfolio.json';
 import decisionFixtures from './fixtures/decisions.json';
+import scenarioFixtures from './fixtures/scenarios.json';
 
 export type ApiErrorKind =
   | 'session'
@@ -145,5 +148,28 @@ export async function runDecision(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ asOf, objectiveMode }),
+  });
+}
+
+/** Runs a baseline decision and the same decision after a scripted disturbance. */
+export async function runScenario(
+  scenarioType: ScenarioType,
+  objectiveMode?: ObjectiveMode,
+  mode: DataMode = DATA_MODE,
+  asOf: string = resolveAsOf()
+): Promise<ScenarioResponse> {
+  if (mode === 'fixture') {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const fixtures = scenarioFixtures as unknown as Record<
+      ScenarioType,
+      ScenarioResponse
+    >;
+    return fixtures[scenarioType];
+  }
+
+  return request<ScenarioResponse>('/scenario', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ asOf, scenarioType, objectiveMode }),
   });
 }

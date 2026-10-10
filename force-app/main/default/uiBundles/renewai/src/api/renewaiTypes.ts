@@ -115,3 +115,50 @@ export interface DecisionResponse {
   alternatives: CandidateResult[];
   rejected: CandidateResult[];
 }
+
+// ---------------- Day 6: scenarios ----------------
+
+export const SCENARIO_TYPES = [
+  'Cloud Front',
+  'Price Spike',
+  'Demand Surge',
+  'Battery Outage',
+] as const;
+export type ScenarioType = (typeof SCENARIO_TYPES)[number];
+
+export interface ParamChange {
+  name: string;
+  before: string;
+  after: string;
+}
+
+export interface MetricDelta {
+  metric: string;
+  label: string;
+  unit: string;
+  baseline: number;
+  disturbed: number;
+  change: number;
+}
+
+export interface ScenarioComparison {
+  decisionChanged: boolean;
+  baselineLabel: string;
+  disturbedLabel: string;
+  deltas: MetricDelta[];
+}
+
+export interface ScenarioResponse {
+  success: true;
+  correlationId: string;
+  scenarioId: string;
+  scenarioType: ScenarioType;
+  description: string;
+  objectiveMode: ObjectiveMode;
+  asOf: string;
+  status: string;
+  parameters: ParamChange[];
+  baseline: DecisionResponse;
+  disturbed: DecisionResponse;
+  comparison: ScenarioComparison;
+}

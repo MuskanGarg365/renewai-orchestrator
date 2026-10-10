@@ -21,6 +21,7 @@ import { BatteryCards } from '@/components/dashboard/BatteryCards';
 import { DataQualityBanner } from '@/components/dashboard/DataQualityBanner';
 import { KpiGrid } from '@/components/dashboard/KpiGrid';
 import { DecisionPanel } from '@/components/decision/DecisionPanel';
+import { ScenarioPanel } from '@/components/scenario/ScenarioPanel';
 import {
   EmptyView,
   ErrorView,
@@ -60,6 +61,7 @@ export default function Home() {
           <KpiGrid metrics={data.metrics} assets={data.assets} />
           <BatteryCards assets={data.assets} />
           <DecisionPanel />
+          <ScenarioPanel />
           <AssetTable assets={data.assets} />
         </>
       )}

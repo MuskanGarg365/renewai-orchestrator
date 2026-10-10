@@ -72,6 +72,18 @@ for (const mode of ['Balanced', 'Cost First']) {
   check(body.selected?.actions?.length > 0, `${mode}: ${body.selected?.candidateId} with ${body.selected?.actions?.length} actions`);
 }
 
+// Day 6: scenarios (each saves a Scenario__c plus a before and after decision)
+for (const scenarioType of ['Cloud Front', 'Price Spike', 'Demand Surge', 'Battery Outage']) {
+  const r = post('/scenario', { asOf, scenarioType });
+  let body = {};
+  try { body = JSON.parse(r.text); } catch { console.error('  Not JSON:', r.text.slice(0, 300)); }
+  check(body.status === 'Completed', `POST /scenario (${scenarioType}) completed`);
+  check(
+    body.baseline?.decisionId && body.disturbed?.decisionId,
+    `${scenarioType}: before ${body.baseline?.selected?.candidateId} -> after ${body.disturbed?.selected?.candidateId}`
+  );
+}
+
 // Negative test: a timestamp not on a 15-minute boundary must be rejected.
 const bad = get('/portfolio?asOf=2026-10-09T06:31:00Z');
 check(

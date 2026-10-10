@@ -50,6 +50,8 @@ global with sharing class RenewAIRestResource {
 
             if (resourcePath == 'decision') {
                 handleDecision(request, response, correlationId);
+            } else if (resourcePath == 'scenario') {
+                handleScenario(request, response, correlationId);
             } else {
                 writeError(
                     response,
@@ -150,6 +152,30 @@ global with sharing class RenewAIRestResource {
         response.responseBody = Blob.valueOf(JSON.serialize(result));
     }
 
+    private static void handleScenario(
+        RestRequest request,
+        RestResponse response,
+        String correlationId
+    ) {
+        String body = request.requestBody == null
+            ? ''
+            : request.requestBody.toString();
+
+        RenewAIDTO.ScenarioRequest scenarioRequest =
+            String.isBlank(body)
+                ? null
+                : (RenewAIDTO.ScenarioRequest) JSON.deserialize(
+                    body,
+                    RenewAIDTO.ScenarioRequest.class
+                );
+
+        RenewAIDTO.ScenarioResponse result =
+            RenewAIScenarioService.run(scenarioRequest, correlationId);
+
+        response.statusCode = 200;
+        response.responseBody = Blob.valueOf(JSON.serialize(result));
+    }
+
     private static void handlePortfolio(RestRequest request, RestResponse response, String correlationId) {
         RenewAIDTO.PortfolioRequest portfolioRequest = new RenewAIDTO.PortfolioRequest();
         String asOfParameter = request.params.get('asOf');
@@ -178,6 +204,7 @@ global with sharing class RenewAIRestResource {
         if (normalized.endsWith('/portfolio')) return 'portfolio';
         if (normalized.endsWith('/assets')) return 'assets';
         if (normalized.endsWith('/decision')) return 'decision';
+        if (normalized.endsWith('/scenario')) return 'scenario';
         return '';
     }
 
