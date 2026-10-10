@@ -72,6 +72,35 @@ for (const mode of ['Balanced', 'Cost First']) {
   check(body.selected?.actions?.length > 0, `${mode}: ${body.selected?.candidateId} with ${body.selected?.actions?.length} actions`);
 }
 
+// Day 6: scenarios (each saves a Scenario__c plus a before and after decision)
+for (const scenarioType of ['Cloud Front', 'Price Spike', 'Demand Surge', 'Battery Outage']) {
+  const r = post('/scenario', { asOf, scenarioType });
+  let body = {};
+  try { body = JSON.parse(r.text); } catch { console.error('  Not JSON:', r.text.slice(0, 300)); }
+  check(body.status === 'Completed', `POST /scenario (${scenarioType}) completed`);
+  check(
+    body.baseline?.decisionId && body.disturbed?.decisionId,
+    `${scenarioType}: before ${body.baseline?.selected?.candidateId} -> after ${body.disturbed?.selected?.candidateId}`
+  );
+}
+
+// Day 8: two-hour simulation (8 intervals) must be repeatable
+const sims = [1, 2].map(() => {
+  const r = post('/simulation', { asOf, scenarioType: 'Cloud Front' });
+  try { return JSON.parse(r.text); } catch { console.error('  Not JSON:', r.text.slice(0, 300)); return {}; }
+});
+check(sims[0].status === 'Completed', 'POST /simulation completed');
+check(sims[0].primary?.steps?.length === 8, `simulation has 8 steps (got ${sims[0].primary?.steps?.length})`);
+check(sims[0].comparison?.length === 4, 'objective comparison has 4 runs');
+check(
+  sims[0].primary?.checksum && sims[0].primary?.checksum === sims[1].primary?.checksum,
+  `repeatable: checksum ${sims[0].primary?.checksum} === ${sims[1].primary?.checksum}`
+);
+if (sims[1].scenarioId) {
+  const c = post('/simulation/cancel', { scenarioId: sims[1].scenarioId });
+  check(c.text.includes('Cancelled'), 'POST /simulation/cancel marks the scenario Cancelled');
+}
+
 // Negative test: a timestamp not on a 15-minute boundary must be rejected.
 const bad = get('/portfolio?asOf=2026-10-09T06:31:00Z');
 check(

@@ -17,10 +17,26 @@ public with sharing class RenewAIDecisionService {
             ? 'Balanced'
             : request.objectiveMode;
 
-        // Same validation as the portfolio endpoint (15-minute alignment etc.)
+        RenewAIDecisionEngine.Context ctx = loadContext(
+            request.asOf,
+            correlationId
+        );
+
+        return decideAndPersist(
+            ctx, mode, correlationId, correlationId, null, null, null);
+    }
+
+    /**
+     * Validates asOf, reads the portfolio and builds the engine context.
+     * Public so the scenario service can reuse it.
+     */
+    public static RenewAIDecisionEngine.Context loadContext(
+        Datetime asOf,
+        String correlationId
+    ) {
         RenewAIDTO.PortfolioRequest portfolioRequest =
             new RenewAIDTO.PortfolioRequest();
-        portfolioRequest.asOf = request.asOf;
+        portfolioRequest.asOf = asOf;
         portfolioRequest.intervalMinutes =
             RenewAIInputValidator.INTERVAL_MINUTES;
         portfolioRequest.maximumAgeMinutes =
@@ -33,19 +49,55 @@ public with sharing class RenewAIDecisionService {
                 correlationId
             );
 
-        RenewAIDecisionEngine.Context ctx = buildContext(
+        return buildContext(
             portfolio,
-            request.asOf,
+            asOf,
             portfolioRequest.maximumAgeMinutes
         );
+    }
 
+    /**
+     * Runs the engine on a (possibly disturbed) context and saves the
+     * Decision__c and Action__c rows. scenarioId, phase and stepIndex are
+     * optional and only set for scenario runs.
+     */
+    public static RenewAIDTO.DecisionResponse decideAndPersist(
+        RenewAIDecisionEngine.Context ctx,
+        String mode,
+        String correlationId,
+        String decisionKey,
+        Id scenarioId,
+        String phase,
+        Integer stepIndex
+    ) {
         RenewAIDecisionEngine.EngineResult result =
             RenewAIDecisionEngine.decide(ctx, mode);
 
-        Id decisionId = persist(request.asOf, mode, correlationId, result);
+        return saveDecision(
+            ctx, mode, correlationId, decisionKey,
+            scenarioId, phase, stepIndex, result);
+    }
+
+    /**
+     * Saves an engine result that was already computed (the simulation runs
+     * the engine itself, then saves each step through here).
+     */
+    public static RenewAIDTO.DecisionResponse saveDecision(
+        RenewAIDecisionEngine.Context ctx,
+        String mode,
+        String correlationId,
+        String decisionKey,
+        Id scenarioId,
+        String phase,
+        Integer stepIndex,
+        RenewAIDecisionEngine.EngineResult result
+    ) {
+        Id decisionId = persist(
+            ctx.asOf, mode, correlationId, decisionKey,
+            scenarioId, phase, stepIndex, result);
 
         return toResponse(
-            decisionId, correlationId, request.asOf, mode, ctx, result);
+            decisionId, correlationId, ctx.asOf, mode, ctx, result);
     }
 
     // ------------------------------------------------------------- context
@@ -68,6 +120,10 @@ public with sharing class RenewAIDecisionService {
         for (RenewAIDTO.AssetSummary asset : portfolio.assets) {
             if (asset.assetType == 'Grid' && ctx.gridAssetCode == null) {
                 ctx.gridAssetCode = asset.assetCode;
+            }
+
+            if (asset.assetType == 'Solar' && asset.generationMW != null) {
+                ctx.solarMW += asset.generationMW;
             }
 
             if (asset.assetType == 'Battery') {
@@ -120,10 +176,14 @@ public with sharing class RenewAIDecisionService {
         Datetime asOf,
         String mode,
         String correlationId,
+        String decisionKey,
+        Id scenarioId,
+        String phase,
+        Integer stepIndex,
         RenewAIDecisionEngine.EngineResult result
     ) {
         Decision__c decision = new Decision__c(
-            Decision_Key__c = correlationId,
+            Decision_Key__c = decisionKey,
             Correlation_Id__c = correlationId,
             Decision_Type__c = result.decisionType,
             Recommended_Action__c = result.recommendedAction,
@@ -137,6 +197,11 @@ public with sharing class RenewAIDecisionService {
             Score_Breakdown__c = JSON.serialize(result.selected.breakdown),
             Rejected_Candidates__c = JSON.serialize(result.rejected)
         );
+        if (scenarioId != null) {
+            decision.Scenario__c = scenarioId;
+            decision.Scenario_Phase__c = phase;
+            decision.Step_Index__c = stepIndex;
+        }
         insert as user decision;
 
         Set<String> assetCodes = new Set<String>();

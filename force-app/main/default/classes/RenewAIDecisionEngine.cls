@@ -57,6 +57,7 @@ public with sharing class RenewAIDecisionEngine {
     public class Context {
         public Datetime asOf;
         public Decimal renewableMW;
+        public Decimal solarMW = 0;
         public Decimal demandMW;
         public Decimal priceMWh;
         public Decimal gridLimitMW;

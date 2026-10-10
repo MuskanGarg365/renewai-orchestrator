@@ -1,0 +1,15 @@
+{
+  "required" : [ "CaseNumber" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "CaseNumber" : {
+      "title" : "CaseNumber",
+      "description" : "Get the case number ",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}
