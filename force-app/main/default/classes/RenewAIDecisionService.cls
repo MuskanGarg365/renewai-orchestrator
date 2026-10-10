@@ -1,0 +1,223 @@
+/**
+ * Orchestrates one decision: read the portfolio, run the deterministic
+ * engine, persist Decision__c and Action__c, and return the audit trail.
+ */
+public with sharing class RenewAIDecisionService {
+
+    public static RenewAIDTO.DecisionResponse run(
+        RenewAIDTO.DecisionRequest request,
+        String correlationId
+    ) {
+        if (request == null) {
+            throw validation(
+                'request', 'REQUIRED', 'A decision request is required.');
+        }
+
+        String mode = String.isBlank(request.objectiveMode)
+            ? 'Balanced'
+            : request.objectiveMode;
+
+        // Same validation as the portfolio endpoint (15-minute alignment etc.)
+        RenewAIDTO.PortfolioRequest portfolioRequest =
+            new RenewAIDTO.PortfolioRequest();
+        portfolioRequest.asOf = request.asOf;
+        portfolioRequest.intervalMinutes =
+            RenewAIInputValidator.INTERVAL_MINUTES;
+        portfolioRequest.maximumAgeMinutes =
+            RenewAIInputValidator.MAX_AGE_MINUTES;
+        RenewAIInputValidator.validateRequest(portfolioRequest);
+
+        RenewAIDTO.PortfolioResponse portfolio =
+            RenewAIPortfolioService.getPortfolio(
+                portfolioRequest,
+                correlationId
+            );
+
+        RenewAIDecisionEngine.Context ctx = buildContext(
+            portfolio,
+            request.asOf,
+            portfolioRequest.maximumAgeMinutes
+        );
+
+        RenewAIDecisionEngine.EngineResult result =
+            RenewAIDecisionEngine.decide(ctx, mode);
+
+        Id decisionId = persist(request.asOf, mode, correlationId, result);
+
+        return toResponse(
+            decisionId, correlationId, request.asOf, mode, ctx, result);
+    }
+
+    // ------------------------------------------------------------- context
+
+    private static RenewAIDecisionEngine.Context buildContext(
+        RenewAIDTO.PortfolioResponse portfolio,
+        Datetime asOf,
+        Integer maximumAgeMinutes
+    ) {
+        RenewAIDecisionEngine.Context ctx =
+            new RenewAIDecisionEngine.Context();
+
+        ctx.asOf = asOf;
+        ctx.renewableMW = portfolio.metrics.renewableTotalMW;
+        ctx.demandMW = portfolio.metrics.totalDemandMW;
+        ctx.priceMWh = portfolio.metrics.energyPriceMWh;
+        ctx.gridLimitMW = portfolio.metrics.gridCapacityMW;
+        ctx.confidence = findConfidence(asOf, maximumAgeMinutes);
+
+        for (RenewAIDTO.AssetSummary asset : portfolio.assets) {
+            if (asset.assetType == 'Grid' && ctx.gridAssetCode == null) {
+                ctx.gridAssetCode = asset.assetCode;
+            }
+
+            if (asset.assetType == 'Battery') {
+                Boolean available =
+                    asset.status == 'Active' &&
+                    asset.stateOfChargePercent != null &&
+                    asset.stale != true;
+
+                ctx.batteries.add(new RenewAIDecisionEngine.Battery(
+                    asset.assetCode,
+                    asset.capacityMW,
+                    asset.stateOfChargePercent,
+                    available
+                ));
+            }
+        }
+
+        return ctx;
+    }
+
+    // Forecast confidence = average weather score of the recent snapshots.
+    private static Decimal findConfidence(
+        Datetime asOf,
+        Integer maximumAgeMinutes
+    ) {
+        Datetime oldestAccepted = asOf.addMinutes(-maximumAgeMinutes);
+
+        List<AggregateResult> rows = [
+            SELECT AVG(Weather_Score__c) averageScore
+            FROM Operating_Snapshot__c
+            WHERE Timestamp__c <= :asOf
+            AND Timestamp__c >= :oldestAccepted
+            AND Weather_Score__c != null
+            WITH USER_MODE
+        ];
+
+        if (rows.isEmpty() || rows[0].get('averageScore') == null) {
+            return 0.5;
+        }
+
+        Decimal average = Decimal.valueOf(
+            String.valueOf(rows[0].get('averageScore'))
+        );
+        return Math.min(Math.max(average * 0.01, 0), 1);
+    }
+
+    // ------------------------------------------------------------- persist
+
+    private static Id persist(
+        Datetime asOf,
+        String mode,
+        String correlationId,
+        RenewAIDecisionEngine.EngineResult result
+    ) {
+        Decision__c decision = new Decision__c(
+            Decision_Key__c = correlationId,
+            Correlation_Id__c = correlationId,
+            Decision_Type__c = result.decisionType,
+            Recommended_Action__c = result.recommendedAction,
+            Reasoning__c = result.explanation,
+            Confidence__c = (result.confidence * 100)
+                .setScale(2, System.RoundingMode.HALF_UP),
+            Objective_Mode__c = mode,
+            Score__c = result.selected.score,
+            Snapshot_Time__c = asOf,
+            Approval_Status__c = result.approvalStatus,
+            Score_Breakdown__c = JSON.serialize(result.selected.breakdown),
+            Rejected_Candidates__c = JSON.serialize(result.rejected)
+        );
+        insert as user decision;
+
+        Set<String> assetCodes = new Set<String>();
+        for (RenewAIDTO.ActionLine line : result.selected.actions) {
+            assetCodes.add(line.assetCode);
+        }
+
+        Map<String, Id> assetIdByCode = new Map<String, Id>();
+        for (RenewAI_Energy_Asset__c asset : [
+            SELECT Id, Asset_Code__c
+            FROM RenewAI_Energy_Asset__c
+            WHERE Asset_Code__c IN :assetCodes
+            WITH USER_MODE
+        ]) {
+            assetIdByCode.put(asset.Asset_Code__c, asset.Id);
+        }
+
+        List<Action__c> actions = new List<Action__c>();
+        for (RenewAIDTO.ActionLine line : result.selected.actions) {
+            actions.add(new Action__c(
+                Decision__c = decision.Id,
+                Action_Type__c = line.actionType,
+                Energy_Asset__c = assetIdByCode.get(line.assetCode),
+                Quantity_MW__c = line.quantityMW,
+                Scheduled_Start__c = asOf,
+                Scheduled_End__c = asOf.addMinutes(
+                    RenewAIInputValidator.INTERVAL_MINUTES),
+                Status__c = 'Planned'
+            ));
+        }
+
+        if (!actions.isEmpty()) {
+            insert as user actions;
+        }
+
+        return decision.Id;
+    }
+
+    // ------------------------------------------------------------ response
+
+    private static RenewAIDTO.DecisionResponse toResponse(
+        Id decisionId,
+        String correlationId,
+        Datetime asOf,
+        String mode,
+        RenewAIDecisionEngine.Context ctx,
+        RenewAIDecisionEngine.EngineResult result
+    ) {
+        RenewAIDTO.DecisionResponse response =
+            new RenewAIDTO.DecisionResponse();
+
+        response.correlationId = correlationId;
+        response.decisionId = decisionId;
+        response.asOf = asOf;
+        response.objectiveMode = mode;
+        response.confidence = result.confidence;
+        response.reserveMW = result.reserveMW;
+        response.approvalStatus = result.approvalStatus;
+        response.explanation = result.explanation;
+        response.selected = result.selected;
+        response.alternatives = result.alternatives;
+        response.rejected = result.rejected;
+
+        response.inputs = new RenewAIDTO.DecisionInputs();
+        response.inputs.renewableMW = ctx.renewableMW;
+        response.inputs.demandMW = ctx.demandMW;
+        response.inputs.demandGapMW = ctx.demandMW - ctx.renewableMW;
+        response.inputs.energyPriceMWh = ctx.priceMWh;
+
+        return response;
+    }
+
+    private static RenewAIValidationException validation(
+        String field,
+        String code,
+        String message
+    ) {
+        return new RenewAIValidationException(
+            new List<RenewAIDTO.ErrorDetail>{
+                new RenewAIDTO.ErrorDetail(field, code, message)
+            }
+        );
+    }
+}

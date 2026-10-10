@@ -7,11 +7,18 @@ import {
   resolveAsOf,
   type DataMode,
 } from '@/config';
-import type { ErrorResponse, PortfolioResponse } from './renewaiTypes';
+import type {
+  DecisionResponse,
+  ErrorResponse,
+  ObjectiveMode,
+  PortfolioResponse,
+} from './renewaiTypes';
 import portfolioFixture from './fixtures/portfolio.json';
+import decisionFixtures from './fixtures/decisions.json';
 
 export type ApiErrorKind =
-  | 'unauthorized'
+  | 'session'
+  | 'forbidden'
   | 'validation'
   | 'not_found'
   | 'server'
@@ -30,13 +37,16 @@ export class RenewAIApiError extends Error {
 }
 
 function kindForStatus(status: number): ApiErrorKind {
-  if (status === 401 || status === 403) return 'unauthorized';
+  if (status === 401) return 'session';
+  if (status === 403) return 'forbidden';
   if (status === 400) return 'validation';
   if (status === 404) return 'not_found';
   return 'server';
 }
 
-async function request<T>(path: string): Promise<T> {
+type PlatformError = { message?: string; errorCode?: string };
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const sdk = await createDataSDK();
   if (!sdk.fetch) {
     throw new RenewAIApiError(
@@ -48,7 +58,8 @@ async function request<T>(path: string): Promise<T> {
   let response: Response;
   try {
     response = await sdk.fetch(`${APEX_BASE_PATH}${path}`, {
-      headers: { Accept: 'application/json' },
+      ...init,
+      headers: { Accept: 'application/json', ...(init?.headers ?? {}) },
     });
   } catch {
     throw new RenewAIApiError('Could not reach Salesforce.', 'network');
@@ -63,18 +74,34 @@ async function request<T>(path: string): Promise<T> {
   }
 
   if (!response.ok) {
-    const err = body as Partial<ErrorResponse> | null;
+    // RenewAI errors are objects; Salesforce platform errors are arrays.
+    const apex = Array.isArray(body)
+      ? undefined
+      : (body as Partial<ErrorResponse> | null);
+    const platform = Array.isArray(body)
+      ? ((body as PlatformError[])[0] ?? undefined)
+      : undefined;
+
+    const message =
+      apex?.message ??
+      (platform
+        ? `${platform.message ?? ''} [${platform.errorCode ?? ''}]`
+        : '');
+    const detail = apex?.errors?.[0]
+      ? ` (${apex.errors[0].code}: ${apex.errors[0].message})`
+      : '';
+
     throw new RenewAIApiError(
-      err?.message ?? `Request failed (${response.status}).`,
+      (message || `Request failed (${response.status}).`) + detail,
       kindForStatus(response.status),
       response.status,
-      err?.correlationId ?? correlationId
+      apex?.correlationId ?? correlationId
     );
   }
   if (body == null) {
     throw new RenewAIApiError(
       'Unexpected response from Salesforce.',
-      'unauthorized',
+      'session',
       response.status
     );
   }
@@ -97,4 +124,26 @@ export async function getPortfolio(
     maximumAgeMinutes: String(MAX_AGE_MINUTES),
   });
   return request<PortfolioResponse>(`/portfolio?${query.toString()}`);
+}
+
+/** Runs the deterministic decision engine and records the decision in Salesforce. */
+export async function runDecision(
+  objectiveMode: ObjectiveMode,
+  mode: DataMode = DATA_MODE,
+  asOf: string = resolveAsOf()
+): Promise<DecisionResponse> {
+  if (mode === 'fixture') {
+    await new Promise(resolve => setTimeout(resolve, 250));
+    const fixtures = decisionFixtures as unknown as Record<
+      ObjectiveMode,
+      DecisionResponse
+    >;
+    return fixtures[objectiveMode];
+  }
+
+  return request<DecisionResponse>('/decision', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ asOf, objectiveMode }),
+  });
 }

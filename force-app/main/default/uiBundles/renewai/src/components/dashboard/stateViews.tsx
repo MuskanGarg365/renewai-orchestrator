@@ -30,10 +30,13 @@ export function EmptyView({ onRetry }: { onRetry: () => void }) {
 }
 
 const messages: Record<RenewAIApiError['kind'], string> = {
-  unauthorized:
-    'You are not authorized to read RenewAI data. Check that your user has the RenewAI_Operator permission set and is signed in.',
-  validation: 'The portfolio request was rejected by validation.',
-  not_found: 'The RenewAI API endpoint was not found. Has the Apex class been deployed?',
+  session:
+    'Your Salesforce session is not valid. Re-authenticate (sf org login web) and restart the dev server, or sign in again.',
+  forbidden:
+    'You are signed in but cannot read RenewAI data. Check the RenewAI_Operator permission set and Apex class access.',
+  validation: 'The request was rejected by validation.',
+  not_found:
+    'The RenewAI API endpoint was not found. Has the Apex class been deployed?',
   server: 'RenewAI could not process the request.',
   network: 'Could not reach Salesforce. Check your connection.',
 };
