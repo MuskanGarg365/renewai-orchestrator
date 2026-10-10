@@ -84,6 +84,23 @@ for (const scenarioType of ['Cloud Front', 'Price Spike', 'Demand Surge', 'Batte
   );
 }
 
+// Day 8: two-hour simulation (8 intervals) must be repeatable
+const sims = [1, 2].map(() => {
+  const r = post('/simulation', { asOf, scenarioType: 'Cloud Front' });
+  try { return JSON.parse(r.text); } catch { console.error('  Not JSON:', r.text.slice(0, 300)); return {}; }
+});
+check(sims[0].status === 'Completed', 'POST /simulation completed');
+check(sims[0].primary?.steps?.length === 8, `simulation has 8 steps (got ${sims[0].primary?.steps?.length})`);
+check(sims[0].comparison?.length === 4, 'objective comparison has 4 runs');
+check(
+  sims[0].primary?.checksum && sims[0].primary?.checksum === sims[1].primary?.checksum,
+  `repeatable: checksum ${sims[0].primary?.checksum} === ${sims[1].primary?.checksum}`
+);
+if (sims[1].scenarioId) {
+  const c = post('/simulation/cancel', { scenarioId: sims[1].scenarioId });
+  check(c.text.includes('Cancelled'), 'POST /simulation/cancel marks the scenario Cancelled');
+}
+
 // Negative test: a timestamp not on a 15-minute boundary must be rejected.
 const bad = get('/portfolio?asOf=2026-10-09T06:31:00Z');
 check(

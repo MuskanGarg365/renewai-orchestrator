@@ -217,4 +217,123 @@ public class RenewAIDTO {
             parameters = new List<ParamChange>();
         }
     }
+
+    // ---------------- Day 8: time-based simulation ----------------
+
+    public class SimulationRequest {
+        public Datetime asOf { get; set; }
+        public String scenarioType { get; set; }
+        public String objectiveMode { get; set; }
+        public Boolean compareModes { get; set; }
+    }
+
+    public class BatteryPoint {
+        public String assetCode { get; set; }
+        public Decimal socPercent { get; set; }
+        public Boolean available { get; set; }
+
+        public BatteryPoint(
+            String assetCode,
+            Decimal socPercent,
+            Boolean available
+        ) {
+            this.assetCode = assetCode;
+            this.socPercent = socPercent;
+            this.available = available;
+        }
+    }
+
+    public class SimStep {
+        public Integer stepIndex { get; set; }
+        public Datetime timestamp { get; set; }
+        public Decimal intensity { get; set; }
+        public Decimal renewableMW { get; set; }
+        public Decimal demandMW { get; set; }
+        public Decimal priceMWh { get; set; }
+        public Decimal confidencePct { get; set; }
+        public Decimal reserveMW { get; set; }
+        public String clusterId { get; set; }
+        public String clusterLabel { get; set; }
+        public String setpoints { get; set; }
+        public String approvalStatus { get; set; }
+        public Boolean reliabilityEvent { get; set; }
+        public Decimal dischargeMW { get; set; }
+        public Decimal chargeMW { get; set; }
+        public Decimal buyMW { get; set; }
+        public Decimal sellMW { get; set; }
+        public Decimal curtailMW { get; set; }
+        public Decimal energyCostINR { get; set; }
+        public Decimal revenueINR { get; set; }
+        public Decimal carbonT { get; set; }
+        public Decimal curtailedMWh { get; set; }
+        public Decimal cumEnergyCostINR { get; set; }
+        public Decimal cumRevenueINR { get; set; }
+        public Decimal cumCarbonT { get; set; }
+        public Decimal cumCurtailedMWh { get; set; }
+        public Integer cumReliabilityEvents { get; set; }
+        public List<BatteryPoint> batteries { get; set; }
+        public String decisionId { get; set; }
+
+        public SimStep() {
+            batteries = new List<BatteryPoint>();
+        }
+    }
+
+    public class SimTotals {
+        public Decimal energyCostINR { get; set; }
+        public Decimal revenueINR { get; set; }
+        public Decimal netCostINR { get; set; }
+        public Decimal carbonT { get; set; }
+        public Decimal curtailedMWh { get; set; }
+        public Integer reliabilityEvents { get; set; }
+        public Integer pendingApprovals { get; set; }
+        public Integer clusterChanges { get; set; }
+    }
+
+    public class SimRun {
+        public String objectiveMode { get; set; }
+        public String checksum { get; set; }
+        public SimTotals totals { get; set; }
+        public List<SimStep> steps { get; set; }
+
+        public SimRun() {
+            steps = new List<SimStep>();
+        }
+    }
+
+    public class SimulationResponse {
+        public Boolean success { get; set; }
+        public String correlationId { get; set; }
+        public Id scenarioId { get; set; }
+        public String scenarioType { get; set; }
+        public String description { get; set; }
+        public String status { get; set; }
+        public Datetime asOf { get; set; }
+        public Integer intervalMinutes { get; set; }
+        public String objectiveMode { get; set; }
+        public List<Decimal> intensityProfile { get; set; }
+        public SimRun primary { get; set; }
+        public List<SimRun> comparison { get; set; }
+
+        public SimulationResponse() {
+            success = true;
+            intensityProfile = new List<Decimal>();
+            comparison = new List<SimRun>();
+        }
+    }
+
+    public class SimulationCancelRequest {
+        public String scenarioId { get; set; }
+    }
+
+    public class SimulationCancelResponse {
+        public Boolean success { get; set; }
+        public String correlationId { get; set; }
+        public String scenarioId { get; set; }
+        public String status { get; set; }
+
+        public SimulationCancelResponse() {
+            success = true;
+        }
+    }
 }

@@ -52,6 +52,10 @@ global with sharing class RenewAIRestResource {
                 handleDecision(request, response, correlationId);
             } else if (resourcePath == 'scenario') {
                 handleScenario(request, response, correlationId);
+            } else if (resourcePath == 'simulation') {
+                handleSimulation(request, response, correlationId);
+            } else if (resourcePath == 'simulationcancel') {
+                handleSimulationCancel(request, response, correlationId);
             } else {
                 writeError(
                     response,
@@ -176,6 +180,54 @@ global with sharing class RenewAIRestResource {
         response.responseBody = Blob.valueOf(JSON.serialize(result));
     }
 
+    private static void handleSimulation(
+        RestRequest request,
+        RestResponse response,
+        String correlationId
+    ) {
+        String body = request.requestBody == null
+            ? ''
+            : request.requestBody.toString();
+
+        RenewAIDTO.SimulationRequest simulationRequest =
+            String.isBlank(body)
+                ? null
+                : (RenewAIDTO.SimulationRequest) JSON.deserialize(
+                    body,
+                    RenewAIDTO.SimulationRequest.class
+                );
+
+        RenewAIDTO.SimulationResponse result =
+            RenewAISimulationService.run(simulationRequest, correlationId);
+
+        response.statusCode = 200;
+        response.responseBody = Blob.valueOf(JSON.serialize(result));
+    }
+
+    private static void handleSimulationCancel(
+        RestRequest request,
+        RestResponse response,
+        String correlationId
+    ) {
+        String body = request.requestBody == null
+            ? ''
+            : request.requestBody.toString();
+
+        RenewAIDTO.SimulationCancelRequest cancelRequest =
+            String.isBlank(body)
+                ? null
+                : (RenewAIDTO.SimulationCancelRequest) JSON.deserialize(
+                    body,
+                    RenewAIDTO.SimulationCancelRequest.class
+                );
+
+        RenewAIDTO.SimulationCancelResponse result =
+            RenewAISimulationService.cancel(cancelRequest, correlationId);
+
+        response.statusCode = 200;
+        response.responseBody = Blob.valueOf(JSON.serialize(result));
+    }
+
     private static void handlePortfolio(RestRequest request, RestResponse response, String correlationId) {
         RenewAIDTO.PortfolioRequest portfolioRequest = new RenewAIDTO.PortfolioRequest();
         String asOfParameter = request.params.get('asOf');
@@ -205,6 +257,8 @@ global with sharing class RenewAIRestResource {
         if (normalized.endsWith('/assets')) return 'assets';
         if (normalized.endsWith('/decision')) return 'decision';
         if (normalized.endsWith('/scenario')) return 'scenario';
+        if (normalized.endsWith('/simulation/cancel')) return 'simulationcancel';
+        if (normalized.endsWith('/simulation')) return 'simulation';
         return '';
     }
 

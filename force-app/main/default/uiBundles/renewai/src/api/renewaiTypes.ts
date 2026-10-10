@@ -162,3 +162,83 @@ export interface ScenarioResponse {
   disturbed: DecisionResponse;
   comparison: ScenarioComparison;
 }
+
+// ---------------- Day 8: two-hour simulation ----------------
+
+export interface BatteryPoint {
+  assetCode: string;
+  socPercent: number;
+  available: boolean;
+}
+
+export interface SimStep {
+  stepIndex: number;
+  timestamp: string;
+  intensity: number;
+  renewableMW: number;
+  demandMW: number;
+  priceMWh: number;
+  confidencePct: number;
+  reserveMW: number;
+  clusterId: string;
+  clusterLabel: string;
+  setpoints: string;
+  approvalStatus: 'Not Required' | 'Pending' | 'Approved';
+  reliabilityEvent: boolean;
+  dischargeMW: number;
+  chargeMW: number;
+  buyMW: number;
+  sellMW: number;
+  curtailMW: number;
+  energyCostINR: number;
+  revenueINR: number;
+  carbonT: number;
+  curtailedMWh: number;
+  cumEnergyCostINR: number;
+  cumRevenueINR: number;
+  cumCarbonT: number;
+  cumCurtailedMWh: number;
+  cumReliabilityEvents: number;
+  batteries: BatteryPoint[];
+  decisionId?: string;
+}
+
+export interface SimTotals {
+  energyCostINR: number;
+  revenueINR: number;
+  netCostINR: number;
+  carbonT: number;
+  curtailedMWh: number;
+  reliabilityEvents: number;
+  pendingApprovals: number;
+  clusterChanges: number;
+}
+
+export interface SimRun {
+  objectiveMode: ObjectiveMode;
+  checksum: string;
+  totals: SimTotals;
+  steps: SimStep[];
+}
+
+export interface SimulationResponse {
+  success: true;
+  correlationId: string;
+  scenarioId: string;
+  scenarioType: ScenarioType;
+  description: string;
+  status: string;
+  asOf: string;
+  intervalMinutes: number;
+  objectiveMode: ObjectiveMode;
+  intensityProfile: number[];
+  primary: SimRun;
+  comparison: SimRun[];
+}
+
+export interface SimulationCancelResponse {
+  success: true;
+  correlationId: string;
+  scenarioId: string;
+  status: string;
+}

@@ -14,10 +14,13 @@ import type {
   PortfolioResponse,
   ScenarioResponse,
   ScenarioType,
+  SimulationCancelResponse,
+  SimulationResponse,
 } from './renewaiTypes';
 import portfolioFixture from './fixtures/portfolio.json';
 import decisionFixtures from './fixtures/decisions.json';
 import scenarioFixtures from './fixtures/scenarios.json';
+import simulationFixtures from './fixtures/simulations.json';
 
 export type ApiErrorKind =
   | 'session'
@@ -171,5 +174,52 @@ export async function runScenario(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ asOf, scenarioType, objectiveMode }),
+  });
+}
+
+/** Runs the eight-interval (two-hour) simulation. Pass a signal to cancel the wait. */
+export async function runSimulation(
+  scenarioType: ScenarioType,
+  objectiveMode?: ObjectiveMode,
+  mode: DataMode = DATA_MODE,
+  asOf: string = resolveAsOf(),
+  signal?: AbortSignal
+): Promise<SimulationResponse> {
+  if (mode === 'fixture') {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    if (signal?.aborted) throw new RenewAIApiError('Cancelled.', 'network');
+    const fixtures = simulationFixtures as unknown as Record<
+      ScenarioType,
+      SimulationResponse
+    >;
+    return fixtures[scenarioType];
+  }
+
+  return request<SimulationResponse>('/simulation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ asOf, scenarioType, objectiveMode, compareModes: true }),
+    signal,
+  });
+}
+
+/** Marks a saved simulation as Cancelled in Salesforce. */
+export async function cancelSimulation(
+  scenarioId: string,
+  mode: DataMode = DATA_MODE
+): Promise<SimulationCancelResponse> {
+  if (mode === 'fixture') {
+    return {
+      success: true,
+      correlationId: 'RENEWAI-FIXCANCEL',
+      scenarioId,
+      status: 'Cancelled',
+    };
+  }
+
+  return request<SimulationCancelResponse>('/simulation/cancel', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ scenarioId }),
   });
 }

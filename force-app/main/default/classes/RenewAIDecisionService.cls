@@ -73,6 +73,25 @@ public with sharing class RenewAIDecisionService {
         RenewAIDecisionEngine.EngineResult result =
             RenewAIDecisionEngine.decide(ctx, mode);
 
+        return saveDecision(
+            ctx, mode, correlationId, decisionKey,
+            scenarioId, phase, stepIndex, result);
+    }
+
+    /**
+     * Saves an engine result that was already computed (the simulation runs
+     * the engine itself, then saves each step through here).
+     */
+    public static RenewAIDTO.DecisionResponse saveDecision(
+        RenewAIDecisionEngine.Context ctx,
+        String mode,
+        String correlationId,
+        String decisionKey,
+        Id scenarioId,
+        String phase,
+        Integer stepIndex,
+        RenewAIDecisionEngine.EngineResult result
+    ) {
         Id decisionId = persist(
             ctx.asOf, mode, correlationId, decisionKey,
             scenarioId, phase, stepIndex, result);
