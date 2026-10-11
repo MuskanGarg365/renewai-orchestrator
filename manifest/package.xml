@@ -2,20 +2,89 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
     <types>
-    <members>RenewAIDTO</members>
-    <members>RenewAIValidationException</members>
-    <members>RenewAIInputValidator</members>
-    <members>RenewAIPortfolioService</members>
-    <members>RenewAIRestResource</members>
-    <members>RenewAIPortfolioServiceTest</members>
-    <members>RenewAIRestResourceTest</members>
-    <name>ApexClass</name>
+        <members>RenewAIAccessException</members>
+        <members>RenewAIAgentActionsTest</members>
+        <members>RenewAIAgentGetExplanation</members>
+        <members>RenewAIAgentGetPortfolioState</members>
+        <members>RenewAIAgentRunDecision</members>
+        <members>RenewAIAgentRunScenario</members>
+        <members>RenewAIAgentSupport</members>
+        <members>RenewAIApprovalRestTest</members>
+        <members>RenewAIApprovalService</members>
+        <members>RenewAIApprovalServiceTest</members>
+        <members>RenewAIAuditService</members>
+        <members>RenewAIDTO</members>
+        <members>RenewAIDecisionEngine</members>
+        <members>RenewAIDecisionEngineTest</members>
+        <members>RenewAIDecisionService</members>
+        <members>RenewAIDecisionServiceTest</members>
+        <members>RenewAIInputValidator</members>
+        <members>RenewAIPortfolioService</members>
+        <members>RenewAIPortfolioServiceTest</members>
+        <members>RenewAIRestResource</members>
+        <members>RenewAIRestResourceTest</members>
+        <members>RenewAIScenarioCatalog</members>
+        <members>RenewAIScenarioCatalogTest</members>
+        <members>RenewAIScenarioService</members>
+        <members>RenewAIScenarioServiceTest</members>
+        <members>RenewAISeedData</members>
+        <members>RenewAISimulationEngine</members>
+        <members>RenewAISimulationEngineTest</members>
+        <members>RenewAISimulationService</members>
+        <members>RenewAISimulationServiceTest</members>
+        <members>RenewAISmokeTest</members>
+        <members>RenewAIValidationException</members>
+        <name>ApexClass</name>
     </types>
+
+    <types>
+        <members>Action__c</members>
+        <members>Battery_State__c</members>
+        <members>Decision__c</members>
+        <members>Market_Signal__c</members>
+        <members>Operating_Snapshot__c</members>
+        <members>RenewAI_Energy_Asset__c</members>
+        <members>Scenario__c</members>
+        <name>CustomObject</name>
+    </types>
+
+    <types>
+        <members>RenewAI_Approve_Decisions</members>
+        <name>CustomPermission</name>
+    </types>
+
+    <types>
+        <members>MigrationDefaultTopic</members>
+        <name>GenAiPlugin</name>
+    </types>
+
     <types>
         <members>RenewAI_Admin</members>
+        <members>RenewAI_Agent_Access</members>
+        <members>RenewAI_Approver</members>
+        <members>RenewAI_Audit_Access</members>
+        <members>RenewAI_Decision_Access</members>
         <members>RenewAI_Operator</members>
+        <members>RenewAI_Scenario_Access</members>
         <name>PermissionSet</name>
     </types>
-    <version>65.0</version>
+
+    <types>
+        <members>Action__c</members>
+        <members>Battery_State__c</members>
+        <members>Decision__c</members>
+        <members>Market_Signal__c</members>
+        <members>Operating_Snapshot__c</members>
+        <members>RenewAI_Energy_Asset__c</members>
+        <members>Scenario__c</members>
+        <name>CustomTab</name>
+    </types>
+
+    <types>
+        <members>renewai</members>
+        <name>UIBundle</name>
+    </types>
+
+    <version>67.0</version>
 
 </Package>
