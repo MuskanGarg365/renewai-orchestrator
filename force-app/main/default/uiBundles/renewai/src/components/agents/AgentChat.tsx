@@ -1,48 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { embedAgentforceClient } from '@salesforce/agentforce-conversation-client';
 
-declare global {
-  interface Window {
-    embeddedservice_bootstrap?: {
-      settings: Record<string, unknown>;
-      init: (
-        orgId: string,
-        deployment: string,
-        siteUrl: string,
-        options: { scrt2URL: string }
-      ) => void;
-    };
-  }
-}
-
-const env = import.meta.env;
-
-/** Loads Salesforce's chat widget so the Agentforce agent appears as a chat button. */
 export function AgentChat() {
-  useEffect(() => {
-    const bootstrapUrl = env.VITE_AGENT_BOOTSTRAP_URL;
-    if (!bootstrapUrl || !env.VITE_AGENT_ORG_ID) return; // not configured: render nothing
-    if (document.getElementById('renewai-agent-script')) return;
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    const script = document.createElement('script');
-    script.id = 'renewai-agent-script';
-    script.src = bootstrapUrl;
-    script.async = true;
-    script.onload = () => {
-      try {
-        window.embeddedservice_bootstrap!.settings.language = 'en_US';
-        window.embeddedservice_bootstrap!.init(
-          env.VITE_AGENT_ORG_ID,
-          env.VITE_AGENT_DEPLOYMENT,
-          env.VITE_AGENT_SITE_URL,
-          { scrt2URL: env.VITE_AGENT_SCRT_URL }
-        );
-      } catch (err) {
-        console.error('Agent chat failed to start', err);
-      }
-    };
-    script.onerror = () => console.error('Agent chat script could not load');
-    document.body.appendChild(script);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Use the primary Salesforce instance domain URL as the origin
+    const salesforceOrigin =
+  (import.meta.env.VITE_SF_INSTANCE_URL as string | undefined) ||
+  window.location.origin;
+
+    embedAgentforceClient({
+      container,
+      salesforceOrigin, // Passed explicitly here
+      agentforceClientConfig: {
+        agentId: '0Xxhg000000lnQHCAY',
+        agentLabel: 'Renew_AI_Chat', // Exact API name causing the access/permission block
+        renderingConfig: { mode: 'floating' },
+      },
+    });
+
+    return () => container.replaceChildren();
   }, []);
 
-  return null;
+  return <div ref={containerRef} style={{ minHeight: '500px', width: '100%' }} />;
 }
